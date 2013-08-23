@@ -71,6 +71,13 @@
 
 -(void)beginDrawingForType:(Class)toolType
 {
+    if(_activeTool)
+    {
+        _activeTool.selected = NO;
+        _activeTool = Nil;
+        [self setNeedsDisplay];
+    }
+    
     _drawToolClass = toolType;
     _drawing = YES;
 }

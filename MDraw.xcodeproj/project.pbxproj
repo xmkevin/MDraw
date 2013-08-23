@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3317D07B17C6F40D008443C6 /* MDrawRect.m in Sources */ = {isa = PBXBuildFile; fileRef = 3317D07A17C6F40D008443C6 /* MDrawRect.m */; };
+		3317D07E17C74AF3008443C6 /* MDrawEllipse.m in Sources */ = {isa = PBXBuildFile; fileRef = 3317D07D17C74AF3008443C6 /* MDrawEllipse.m */; };
 		33DE966017C466B600A6F222 /* MDrawLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 33DE965F17C466B600A6F222 /* MDrawLine.m */; };
 		33E28B7817C20DA200EFC071 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33E28B7717C20DA200EFC071 /* Foundation.framework */; };
 		33E28B7A17C20DA200EFC071 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33E28B7917C20DA200EFC071 /* CoreGraphics.framework */; };
@@ -40,6 +41,8 @@
 /* Begin PBXFileReference section */
 		3317D07917C6F40D008443C6 /* MDrawRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDrawRect.h; sourceTree = "<group>"; };
 		3317D07A17C6F40D008443C6 /* MDrawRect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDrawRect.m; sourceTree = "<group>"; };
+		3317D07C17C74AF3008443C6 /* MDrawEllipse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDrawEllipse.h; sourceTree = "<group>"; };
+		3317D07D17C74AF3008443C6 /* MDrawEllipse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDrawEllipse.m; sourceTree = "<group>"; };
 		33DE965E17C466B600A6F222 /* MDrawLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDrawLine.h; sourceTree = "<group>"; };
 		33DE965F17C466B600A6F222 /* MDrawLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDrawLine.m; sourceTree = "<group>"; };
 		33E28B7417C20DA200EFC071 /* MDraw.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MDraw.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -176,6 +179,8 @@
 				33DE965F17C466B600A6F222 /* MDrawLine.m */,
 				3317D07917C6F40D008443C6 /* MDrawRect.h */,
 				3317D07A17C6F40D008443C6 /* MDrawRect.m */,
+				3317D07C17C74AF3008443C6 /* MDrawEllipse.h */,
+				3317D07D17C74AF3008443C6 /* MDrawEllipse.m */,
 			);
 			name = DrawTool;
 			sourceTree = "<group>";
@@ -279,6 +284,7 @@
 			files = (
 				33E28B8E17C20DA200EFC071 /* ViewController.m in Sources */,
 				33E28B8817C20DA200EFC071 /* AppDelegate.m in Sources */,
+				3317D07E17C74AF3008443C6 /* MDrawEllipse.m in Sources */,
 				33E28BB217C2140B00EFC071 /* MDrawView.m in Sources */,
 				33E28B8417C20DA200EFC071 /* main.m in Sources */,
 				3317D07B17C6F40D008443C6 /* MDrawRect.m in Sources */,

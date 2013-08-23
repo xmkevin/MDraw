@@ -36,6 +36,11 @@
                                             <action selector="drawRect:" destination="BYZ-38-t0r" id="ZQU-Vs-Bmn"/>
                                         </connections>
                                     </barButtonItem>
+                                    <barButtonItem title="Ellipse" id="Ghl-mn-9H3">
+                                        <connections>
+                                            <action selector="drawEllipse:" destination="BYZ-38-t0r" id="fyN-FI-abu"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                             </toolbar>
                         </subviews>

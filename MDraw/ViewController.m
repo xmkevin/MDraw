@@ -11,6 +11,7 @@
 #import "MDrawView.h"
 #import "MDrawLine.h"
 #import "MDrawRect.h"
+#import "MDrawEllipse.h"
 
 @interface ViewController ()
 
@@ -44,6 +45,11 @@
 -(IBAction)drawRect:(id)sender
 {
     [drawView beginDrawingForType:[MDrawRect class]];
+}
+
+-(IBAction)drawEllipse:(id)sender
+{
+    [drawView beginDrawingForType:[MDrawEllipse class]];
 }
 
 
