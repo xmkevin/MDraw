@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		33DE966017C466B600A6F222 /* MDrawLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 33DE965F17C466B600A6F222 /* MDrawLine.m */; };
 		33E28B7817C20DA200EFC071 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33E28B7717C20DA200EFC071 /* Foundation.framework */; };
 		33E28B7A17C20DA200EFC071 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33E28B7917C20DA200EFC071 /* CoreGraphics.framework */; };
 		33E28B7C17C20DA200EFC071 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33E28B7B17C20DA200EFC071 /* UIKit.framework */; };
@@ -21,6 +22,8 @@
 		33E28B9917C20DA200EFC071 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33E28B7B17C20DA200EFC071 /* UIKit.framework */; };
 		33E28BA117C20DA200EFC071 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 33E28B9F17C20DA200EFC071 /* InfoPlist.strings */; };
 		33E28BA317C20DA200EFC071 /* MDrawTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 33E28BA217C20DA200EFC071 /* MDrawTests.m */; };
+		33E28BAF17C20E6D00EFC071 /* MDrawTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 33E28BAE17C20E6D00EFC071 /* MDrawTool.m */; };
+		33E28BB217C2140B00EFC071 /* MDrawView.m in Sources */ = {isa = PBXBuildFile; fileRef = 33E28BB117C2140B00EFC071 /* MDrawView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +37,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		33DE965E17C466B600A6F222 /* MDrawLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDrawLine.h; sourceTree = "<group>"; };
+		33DE965F17C466B600A6F222 /* MDrawLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDrawLine.m; sourceTree = "<group>"; };
 		33E28B7417C20DA200EFC071 /* MDraw.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MDraw.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		33E28B7717C20DA200EFC071 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		33E28B7917C20DA200EFC071 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -53,6 +58,10 @@
 		33E28B9E17C20DA200EFC071 /* MDrawTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MDrawTests-Info.plist"; sourceTree = "<group>"; };
 		33E28BA017C20DA200EFC071 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		33E28BA217C20DA200EFC071 /* MDrawTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MDrawTests.m; sourceTree = "<group>"; };
+		33E28BAD17C20E6D00EFC071 /* MDrawTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDrawTool.h; sourceTree = "<group>"; };
+		33E28BAE17C20E6D00EFC071 /* MDrawTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDrawTool.m; sourceTree = "<group>"; };
+		33E28BB017C2140B00EFC071 /* MDrawView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDrawView.h; sourceTree = "<group>"; };
+		33E28BB117C2140B00EFC071 /* MDrawView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDrawView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +121,7 @@
 		33E28B7D17C20DA200EFC071 /* MDraw */ = {
 			isa = PBXGroup;
 			children = (
+				33E28BAC17C20DB500EFC071 /* DrawTool */,
 				33E28B8617C20DA200EFC071 /* AppDelegate.h */,
 				33E28B8717C20DA200EFC071 /* AppDelegate.m */,
 				33E28B8917C20DA200EFC071 /* Main.storyboard */,
@@ -150,6 +160,19 @@
 				33E28B9F17C20DA200EFC071 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		33E28BAC17C20DB500EFC071 /* DrawTool */ = {
+			isa = PBXGroup;
+			children = (
+				33E28BAD17C20E6D00EFC071 /* MDrawTool.h */,
+				33E28BAE17C20E6D00EFC071 /* MDrawTool.m */,
+				33E28BB017C2140B00EFC071 /* MDrawView.h */,
+				33E28BB117C2140B00EFC071 /* MDrawView.m */,
+				33DE965E17C466B600A6F222 /* MDrawLine.h */,
+				33DE965F17C466B600A6F222 /* MDrawLine.m */,
+			);
+			name = DrawTool;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -251,7 +274,10 @@
 			files = (
 				33E28B8E17C20DA200EFC071 /* ViewController.m in Sources */,
 				33E28B8817C20DA200EFC071 /* AppDelegate.m in Sources */,
+				33E28BB217C2140B00EFC071 /* MDrawView.m in Sources */,
 				33E28B8417C20DA200EFC071 /* main.m in Sources */,
+				33E28BAF17C20E6D00EFC071 /* MDrawTool.m in Sources */,
+				33DE966017C466B600A6F222 /* MDrawLine.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -379,6 +405,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MDraw/MDraw-Prefix.pch";
 				INFOPLIST_FILE = "MDraw/MDraw-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -392,6 +419,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MDraw/MDraw-Prefix.pch";
 				INFOPLIST_FILE = "MDraw/MDraw-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -456,6 +484,7 @@
 				33E28BA817C20DA200EFC071 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		33E28BA917C20DA200EFC071 /* Build configuration list for PBXNativeTarget "MDrawTests" */ = {
 			isa = XCConfigurationList;
@@ -464,6 +493,7 @@
 				33E28BAB17C20DA200EFC071 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
