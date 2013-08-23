@@ -14,6 +14,19 @@
     Class _drawToolClass;
 }
 
+
+-(id)initWithCoder:(NSCoder *)aDecoder
+{
+    if(self = [super initWithCoder:aDecoder])
+    {
+        // Initialization code
+        _tools = [[NSMutableArray alloc] init];
+        [self initGestures];
+    }
+    
+    return self;
+}
+
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -21,8 +34,6 @@
         // Initialization code
         _tools = [[NSMutableArray alloc] init];
         [self initGestures];
-        
-        _drawToolClass = [MDrawLine class];
     }
     return self;
 }
@@ -60,6 +71,8 @@
 
 -(void)beginDrawingForType:(Class)toolType
 {
+    _drawToolClass = toolType;
+    _drawing = YES;
 }
 
 -(void)finalizeDrawing
@@ -167,6 +180,7 @@
 -(void)drawFinish:(CGPoint)point
 {
     [_activeTool finalize:point];
+    _drawing = NO;
 }
 
 #pragma mark - hit tests

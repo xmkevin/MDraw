@@ -10,30 +10,40 @@
 
 #import "MDrawView.h"
 #import "MDrawLine.h"
+#import "MDrawRect.h"
 
 @interface ViewController ()
 
 @end
 
 @implementation ViewController
+{
+    __weak IBOutlet MDrawView *drawView;
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
-    MDrawView *drawView = [[MDrawView alloc] initWithFrame:self.view.frame];
-    MDrawTool *tool = [[MDrawLine alloc] initWithStartPoint:CGPointMake(100, 100)];
-    tool.selected = NO;
-    [tool finalize:CGPointMake(200, 200)];
-    [drawView addTool:tool];
-    [self.view addSubview:drawView];
+//    drawView = [[MDrawView alloc] initWithFrame:self.view.frame];
+//    [self.view addSubview:drawView];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(IBAction)drawLine:(id)sender
+{
+    [drawView beginDrawingForType:[MDrawLine class]];
+}
+
+-(IBAction)drawRect:(id)sender
+{
+    [drawView beginDrawingForType:[MDrawRect class]];
 }
 
 

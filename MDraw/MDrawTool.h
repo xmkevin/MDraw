@@ -47,6 +47,51 @@ CG_INLINE BOOL CGPointInRect(CGPoint p, CGRect rect)
             p.y <= (rect.origin.y + rect.size.height));
 }
 
+CG_INLINE CGPoint CGRectTL(CGRect rect)
+{
+    return rect.origin;
+}
+
+CG_INLINE CGPoint CGRectTM(CGRect rect)
+{
+    return CGPointMake(rect.origin.x + rect.size.width * 0.5, rect.origin.y);
+}
+
+CG_INLINE CGPoint CGRectTR(CGRect rect)
+{
+    return CGPointMake(rect.origin.x + rect.size.width, rect.origin.y);
+}
+
+CG_INLINE CGPoint CGRectRM(CGRect rect)
+{
+    return CGPointMake(rect.origin.x + rect.size.width, rect.origin.y + rect.size.height * 0.5);
+}
+
+CG_INLINE CGPoint CGRectBR(CGRect rect)
+{
+    return CGPointMake(rect.origin.x + rect.size.width, rect.origin.y + rect.size.height);
+}
+
+CG_INLINE CGPoint CGRectBM(CGRect rect)
+{
+    return CGPointMake(rect.origin.x + rect.size.width * 0.5, rect.origin.y + rect.size.height);
+}
+
+CG_INLINE CGPoint CGRectBL(CGRect rect)
+{
+    return CGPointMake(rect.origin.x , rect.origin.y + rect.size.height);
+}
+
+CG_INLINE CGPoint CGRectLM(CGRect rect)
+{
+    return CGPointMake(rect.origin.x , rect.origin.y + rect.size.height * 0.5);
+}
+
+CG_INLINE CGPoint CGRectMid(CGRect rect)
+{
+    return CGPointMake(rect.origin.x + rect.size.width * 0.5, rect.origin.y + rect.size.height * 0.5);
+}
+
 @protocol MDrawToolProtocol<NSObject>
 
 /**

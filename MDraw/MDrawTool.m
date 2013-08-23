@@ -23,8 +23,8 @@
 {
     return CGRectMake(MIN(_startPoint.x, _endPoint.x),
                       MIN(_startPoint.y, _endPoint.y),
-                      MAX(_startPoint.x, _endPoint.x),
-                      MAX(_startPoint.y, _endPoint.y));
+                      fabsf(_endPoint.x - _startPoint.x),
+                      fabsf(_endPoint.y - _startPoint.y));
 }
 
 -(id)initWithStartPoint:(CGPoint)startPoint
@@ -64,6 +64,15 @@
 -(BOOL)hitTest:(CGPoint)point
 {
     return CGPointInRect(point, self.frame);
+}
+
+-(BOOL)hitOnHandle:(CGPoint)point
+{
+    return NO;
+}
+
+-(void)moveToPoint:(CGPoint)point
+{
 }
 
 -(void)draw:(CGContextRef)ctx
