@@ -10,6 +10,7 @@
 		3317D07B17C6F40D008443C6 /* MDrawRect.m in Sources */ = {isa = PBXBuildFile; fileRef = 3317D07A17C6F40D008443C6 /* MDrawRect.m */; };
 		3317D07E17C74AF3008443C6 /* MDrawEllipse.m in Sources */ = {isa = PBXBuildFile; fileRef = 3317D07D17C74AF3008443C6 /* MDrawEllipse.m */; };
 		33D7940A17CADB97007E2E94 /* MDrawFreeline.m in Sources */ = {isa = PBXBuildFile; fileRef = 33D7940917CADB97007E2E94 /* MDrawFreeline.m */; };
+		33D7940D17CAFA76007E2E94 /* MDrawPolyline.m in Sources */ = {isa = PBXBuildFile; fileRef = 33D7940C17CAFA76007E2E94 /* MDrawPolyline.m */; };
 		33DE966017C466B600A6F222 /* MDrawLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 33DE965F17C466B600A6F222 /* MDrawLine.m */; };
 		33E28B7817C20DA200EFC071 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33E28B7717C20DA200EFC071 /* Foundation.framework */; };
 		33E28B7A17C20DA200EFC071 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33E28B7917C20DA200EFC071 /* CoreGraphics.framework */; };
@@ -46,6 +47,8 @@
 		3317D07D17C74AF3008443C6 /* MDrawEllipse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDrawEllipse.m; sourceTree = "<group>"; };
 		33D7940817CADB97007E2E94 /* MDrawFreeline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDrawFreeline.h; sourceTree = "<group>"; };
 		33D7940917CADB97007E2E94 /* MDrawFreeline.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDrawFreeline.m; sourceTree = "<group>"; };
+		33D7940B17CAFA76007E2E94 /* MDrawPolyline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDrawPolyline.h; sourceTree = "<group>"; };
+		33D7940C17CAFA76007E2E94 /* MDrawPolyline.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDrawPolyline.m; sourceTree = "<group>"; };
 		33DE965E17C466B600A6F222 /* MDrawLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDrawLine.h; sourceTree = "<group>"; };
 		33DE965F17C466B600A6F222 /* MDrawLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDrawLine.m; sourceTree = "<group>"; };
 		33E28B7417C20DA200EFC071 /* MDraw.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MDraw.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -186,6 +189,8 @@
 				3317D07D17C74AF3008443C6 /* MDrawEllipse.m */,
 				33D7940817CADB97007E2E94 /* MDrawFreeline.h */,
 				33D7940917CADB97007E2E94 /* MDrawFreeline.m */,
+				33D7940B17CAFA76007E2E94 /* MDrawPolyline.h */,
+				33D7940C17CAFA76007E2E94 /* MDrawPolyline.m */,
 			);
 			name = DrawTool;
 			sourceTree = "<group>";
@@ -290,6 +295,7 @@
 				33E28B8E17C20DA200EFC071 /* ViewController.m in Sources */,
 				33E28B8817C20DA200EFC071 /* AppDelegate.m in Sources */,
 				3317D07E17C74AF3008443C6 /* MDrawEllipse.m in Sources */,
+				33D7940D17CAFA76007E2E94 /* MDrawPolyline.m in Sources */,
 				33E28BB217C2140B00EFC071 /* MDrawView.m in Sources */,
 				33E28B8417C20DA200EFC071 /* main.m in Sources */,
 				3317D07B17C6F40D008443C6 /* MDrawRect.m in Sources */,

@@ -13,6 +13,7 @@
 #import "MDrawRect.h"
 #import "MDrawEllipse.h"
 #import "MDrawFreeline.h"
+#import "MDrawPolyline.h"
 
 @interface ViewController ()
 
@@ -56,6 +57,16 @@
 -(IBAction)drawFreeline:(id)sender
 {
     [drawView beginDrawingForType:[MDrawFreeline class]];
+}
+
+-(IBAction)drawPolyline:(id)sender
+{
+    [drawView beginDrawingForType:[MDrawPolyline class]];
+}
+
+-(IBAction)finishDrawing:(id)sender
+{
+    [drawView finalizeDrawing];
 }
 
 

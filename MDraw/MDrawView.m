@@ -84,6 +84,8 @@
 
 -(void)finalizeDrawing
 {
+    [_activeTool finalize:CGPointZero];
+    _drawing = NO;
 }
 
 #pragma mark - private methods
@@ -109,7 +111,15 @@
 -(void)handleTapGesture:(UITapGestureRecognizer *)gesture
 {
     CGPoint point = [gesture locationInView:self];
-    [self selectTool:point];
+    if(_drawing)
+    {
+        [self drawUp:point];
+        [self setNeedsDisplay];
+    }
+    else
+    {
+        [self selectTool:point];
+    }
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -156,7 +166,7 @@
     CGPoint point = [touch locationInView:self];
     if(self.drawing)
     {
-        [self drawFinish:point];
+        [self drawUp:point];
     }
     else
     {
@@ -170,8 +180,15 @@
 
 -(void)drawDown:(CGPoint)point
 {
-    _activeTool = [[_drawToolClass alloc] initWithStartPoint:point];
-    [_tools addObject:_activeTool];
+    if(_activeTool && !_activeTool.finalized && _drawing)
+    {
+        [_activeTool drawDown:point];
+    }
+    else
+    {
+        _activeTool = [[_drawToolClass alloc] initWithStartPoint:point];
+        [_tools addObject:_activeTool];
+    }
 }
 
 -(void)drawMove:(CGPoint)point
@@ -182,6 +199,10 @@
 -(void)drawUp:(CGPoint)point
 {
     [_activeTool drawUp:point];
+    if(self.activeTool.finalized)
+    {
+        _drawing = NO;
+    }
 }
 
 -(void)drawFinish:(CGPoint)point

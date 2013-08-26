@@ -46,6 +46,17 @@
                                             <action selector="drawFreeline:" destination="BYZ-38-t0r" id="gbM-gx-gth"/>
                                         </connections>
                                     </barButtonItem>
+                                    <barButtonItem title="Polyline" id="Zhn-m3-LJL">
+                                        <connections>
+                                            <action selector="drawPolyline:" destination="BYZ-38-t0r" id="HG5-mm-d4Q"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="4AE-P7-lxe"/>
+                                    <barButtonItem title="Finish" id="E6D-ya-hLQ">
+                                        <connections>
+                                            <action selector="finishDrawing:" destination="BYZ-38-t0r" id="2rx-V5-E0x"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                             </toolbar>
                         </subviews>
