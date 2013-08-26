@@ -12,6 +12,7 @@
 #import "MDrawLine.h"
 #import "MDrawRect.h"
 #import "MDrawEllipse.h"
+#import "MDrawFreeline.h"
 
 @interface ViewController ()
 
@@ -50,6 +51,11 @@
 -(IBAction)drawEllipse:(id)sender
 {
     [drawView beginDrawingForType:[MDrawEllipse class]];
+}
+
+-(IBAction)drawFreeline:(id)sender
+{
+    [drawView beginDrawingForType:[MDrawFreeline class]];
 }
 
 

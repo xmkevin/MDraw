@@ -36,7 +36,6 @@
         
         self.color = [UIColor colorWithRed:0 green:255 blue:0 alpha:0.6];
         self.lineWidth = 3;
-        self.selected = YES;
         
         _handleFillColor = [UIColor colorWithRed:255 green:255 blue:255 alpha:0.6];
     }

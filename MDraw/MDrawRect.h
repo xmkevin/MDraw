@@ -22,5 +22,9 @@ enum MDrawMoveDirection {
 };
 
 @interface MDrawRect : MDrawTool
+{
+    @protected
+    enum MDrawMoveDirection _moveDirection;
+}
 
 @end

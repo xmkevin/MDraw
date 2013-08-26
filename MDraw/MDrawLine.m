@@ -98,7 +98,7 @@
     _endPoint = point;
     if(!CGPointEqualToPoint(_startPoint, point))
     {
-        _finalized = YES;
+        [self finalize:point];
     }
 }
 
@@ -106,6 +106,7 @@
 {
     _endPoint = point;
     _finalized = YES;
+    self.selected = YES;
 }
 
 -(void)draw:(CGContextRef)ctx

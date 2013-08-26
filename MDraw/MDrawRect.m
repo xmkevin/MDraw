@@ -10,7 +10,7 @@
 
 @implementation MDrawRect
 {
-    enum MDrawMoveDirection _moveDirection;
+   
 }
 
 -(void)drawDown:(CGPoint)point
@@ -24,13 +24,14 @@
 
 -(void)drawUp:(CGPoint)point
 {
-    _endPoint = point;
+    [self finalize:point];
 }
 
 -(void)finalize:(CGPoint)point
 {
     _endPoint = point;
     _finalized = YES;
+    self.selected = YES;
 }
 
 -(BOOL)hitOnHandle:(CGPoint)point

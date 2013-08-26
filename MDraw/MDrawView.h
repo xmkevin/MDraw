@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "MDrawTool.h"
 #import "MDrawLine.h"
+#import "MDrawFreeline.h"
 
 @interface MDrawView : UIView <UIGestureRecognizerDelegate>
 

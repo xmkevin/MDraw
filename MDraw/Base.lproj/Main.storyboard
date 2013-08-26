@@ -41,6 +41,11 @@
                                             <action selector="drawEllipse:" destination="BYZ-38-t0r" id="fyN-FI-abu"/>
                                         </connections>
                                     </barButtonItem>
+                                    <barButtonItem title="Freeline" id="HcT-DK-BzW">
+                                        <connections>
+                                            <action selector="drawFreeline:" destination="BYZ-38-t0r" id="gbM-gx-gth"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                             </toolbar>
                         </subviews>
