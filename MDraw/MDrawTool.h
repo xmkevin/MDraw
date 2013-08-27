@@ -125,17 +125,25 @@ CG_INLINE CGPoint CGRectMid(CGRect rect)
  **/
 -(id)initWithStartPoint:(CGPoint )startPoint;
 
-
+/**
+ * Draw mouse down (touchesBegan)
+ **/
 -(void)drawDown:(CGPoint)point;
 
+/**
+ * Draw mouse move (touchesMove)
+ **/
 -(void)drawMove:(CGPoint)point;
 
+/**
+ * Draw mouse up (touchesEnd)
+ **/
 -(void)drawUp:(CGPoint)point;
 
 /**
- * Finalize the drawing with the end point
+ * Finalize the drawing
  **/
--(void)finalize:(CGPoint)point;
+-(void)finalize;
 
 /**
  * Hit test to see whether or not the point is on the tool

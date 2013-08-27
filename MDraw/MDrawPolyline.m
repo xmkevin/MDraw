@@ -72,7 +72,7 @@
     [_points addObject:[NSValue valueWithCGPoint:point]];
 }
 
--(void)finalize:(CGPoint)point
+-(void)finalize
 {
     _finalized = YES;
     self.selected = YES;

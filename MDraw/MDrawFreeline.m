@@ -60,12 +60,12 @@
 
 -(void)drawUp:(CGPoint)point
 {
-    [self finalize:point];
+    [_points addObject:[NSValue valueWithCGPoint:point]];
+    [self finalize];
 }
 
--(void)finalize:(CGPoint)point
+-(void)finalize
 {
-    [_points addObject:[NSValue valueWithCGPoint:point]];
     _finalized = YES;
     self.selected = YES;
 }

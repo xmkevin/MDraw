@@ -24,12 +24,12 @@
 
 -(void)drawUp:(CGPoint)point
 {
-    [self finalize:point];
+     _endPoint = point;
+    [self finalize];
 }
 
--(void)finalize:(CGPoint)point
+-(void)finalize
 {
-    _endPoint = point;
     _finalized = YES;
     self.selected = YES;
 }

@@ -84,8 +84,9 @@
 
 -(void)finalizeDrawing
 {
-    [_activeTool finalize:CGPointZero];
+    [_activeTool finalize];
     _drawing = NO;
+    [self setNeedsDisplay];
 }
 
 #pragma mark - private methods
@@ -96,16 +97,6 @@
     tapGesture.numberOfTouchesRequired = 1;
     tapGesture.delegate = self;
     [self addGestureRecognizer:tapGesture];
-    
-    UILongPressGestureRecognizer *longPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPressGesture:)];
-    longPressGesture.numberOfTouchesRequired = 1;
-    longPressGesture.delegate = self;
-    [self addGestureRecognizer:longPressGesture];
-    
-}
-
--(void)handleLongPressGesture:(UILongPressGestureRecognizer *)gesture
-{
 }
 
 -(void)handleTapGesture:(UITapGestureRecognizer *)gesture
@@ -124,90 +115,94 @@
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    [self.nextResponder.nextResponder touchesBegan:touches withEvent:event];
-    
     UITouch *touch = [[event allTouches] anyObject];
     CGPoint point = [touch locationInView:self];
-    if(self.drawing)
-    {
-        [self drawDown:point];
-    }
-    else
-    {
-        [self.activeTool hitOnHandle:point];
-    }
     
-    [self setNeedsDisplay];
+    [self drawDown:point];
+    
+    [super touchesBegan:touches withEvent:event];
 }
 
 -(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    [self.nextResponder.nextResponder touchesMoved:touches withEvent:event];
-    
     UITouch *touch = [[event allTouches] anyObject];
     CGPoint point = [touch locationInView:self];
-    if(self.drawing)
-    {
-        [self drawMove:point];
-    }
-    else
-    {
-        [self.activeTool moveToPoint:point];
-    }
     
-    [self setNeedsDisplay];
+    [self drawMove:point];
+    
+    [super touchesMoved:touches withEvent:event];
 }
 
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    [self.nextResponder.nextResponder touchesEnded:touches withEvent:event];
-    
     UITouch *touch = [[event allTouches] anyObject];
     CGPoint point = [touch locationInView:self];
-    if(self.drawing)
-    {
-        [self drawUp:point];
-    }
-    else
-    {
-        [self.activeTool moveToPoint:point];
-    }
     
-    [self setNeedsDisplay];
+    [self drawUp:point];
+    
+    [super touchesEnded:touches withEvent:event];
 }
 
 #pragma mark - draw
 
 -(void)drawDown:(CGPoint)point
 {
-    if(_activeTool && !_activeTool.finalized && _drawing)
+    if(self.drawing)
     {
-        [_activeTool drawDown:point];
+        if(_activeTool && !_activeTool.finalized && _drawing)
+        {
+            [_activeTool drawDown:point];
+        }
+        else
+        {
+            _activeTool = [[_drawToolClass alloc] initWithStartPoint:point];
+            [_tools addObject:_activeTool];
+        }
+        
+        [self setNeedsDisplay];
     }
     else
     {
-        _activeTool = [[_drawToolClass alloc] initWithStartPoint:point];
-        [_tools addObject:_activeTool];
+        [self.activeTool hitOnHandle:point];
     }
 }
 
 -(void)drawMove:(CGPoint)point
 {
-    [_activeTool drawMove:point];
+    if(self.drawing)
+    {
+        [self.activeTool drawMove:point];
+    }
+    else
+    {
+        [self.activeTool moveToPoint:point];
+    }
+    
+    [self setNeedsDisplay];
 }
 
 -(void)drawUp:(CGPoint)point
 {
-    [_activeTool drawUp:point];
-    if(self.activeTool.finalized)
+    if(self.drawing)
     {
-        _drawing = NO;
+        [self.activeTool drawUp:point];
+        
+        if(self.activeTool.finalized)
+        {
+            _drawing = NO;
+        }
     }
+    else
+    {
+        [self.activeTool moveToPoint:point];
+    }
+    
+    [self setNeedsDisplay];
 }
 
--(void)drawFinish:(CGPoint)point
+-(void)drawFinish
 {
-    [_activeTool finalize:point];
+    [_activeTool finalize];
     _drawing = NO;
 }
 
