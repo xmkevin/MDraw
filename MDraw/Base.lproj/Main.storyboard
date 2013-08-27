@@ -17,12 +17,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tqs-3p-pMY" customClass="MDrawView">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tqs-3p-pMY" customClass="MDrawView">
                                 <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5Q1-wS-bRL">
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Q1-wS-bRL">
                                 <rect key="frame" x="0.0" y="0.0" width="1024" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <items>
@@ -61,6 +61,15 @@
                             </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="tqs-3p-pMY" firstAttribute="leading" secondItem="5Q1-wS-bRL" secondAttribute="leading" id="6Qe-eI-PLR"/>
+                            <constraint firstItem="5Q1-wS-bRL" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="CiM-di-f3o"/>
+                            <constraint firstAttribute="bottom" secondItem="tqs-3p-pMY" secondAttribute="bottom" id="TgN-5P-ZUh"/>
+                            <constraint firstItem="5Q1-wS-bRL" firstAttribute="top" secondItem="tqs-3p-pMY" secondAttribute="top" id="bnt-xl-RB4"/>
+                            <constraint firstItem="5Q1-wS-bRL" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="d45-dF-xoH"/>
+                            <constraint firstItem="tqs-3p-pMY" firstAttribute="trailing" secondItem="5Q1-wS-bRL" secondAttribute="trailing" id="vQK-dp-s1M"/>
+                            <constraint firstAttribute="trailing" secondItem="tqs-3p-pMY" secondAttribute="trailing" id="wHf-j5-7UY"/>
+                        </constraints>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
