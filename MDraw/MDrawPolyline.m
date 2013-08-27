@@ -81,8 +81,16 @@
 -(BOOL)hitOnHandle:(CGPoint)point
 {
     _moveHandleIndex = -1;
+    
+    
     if(_points.count > 0 )
     {
+        if([self isPoint:point onHandle:CGRectMid(self.frame)])
+        {
+            _moveHandleIndex = -2;
+            return YES;
+        }
+        
         for (int i = 0; i < _points.count; i++)
         {
             CGPoint handlePoint = [[_points objectAtIndex:i] CGPointValue];
@@ -102,6 +110,17 @@
     if(_moveHandleIndex >= 0)
     {
         [_points replaceObjectAtIndex:_moveHandleIndex withObject:[NSValue valueWithCGPoint:point]];
+    }
+    else if( _moveHandleIndex == -2) // move the shape
+    {
+        CGPoint midPoint = CGRectMid(self.frame);
+        CGSize offset = CGPointOffset(midPoint, point);
+        
+        for (int i = 0; i < _points.count; i++)
+        {
+            CGPoint p = [[_points objectAtIndex:i] CGPointValue];
+            [_points replaceObjectAtIndex:i withObject:[NSValue valueWithCGPoint:CGPointMake(p.x + offset.width, p.y + offset.height)]];
+        }
     }
 }
 
@@ -139,6 +158,9 @@
             CGPoint p = [[_points objectAtIndex:i] CGPointValue];
             [self drawHandle:ctx atPoint:p];
         }
+        
+        CGPoint mid = CGRectMid(self.frame);
+        [self drawHandle:ctx atPoint:mid];
     }
 
 }
