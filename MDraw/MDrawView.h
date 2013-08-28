@@ -32,10 +32,11 @@
 -(BOOL)undo;
 -(BOOL)redo;
 
--(void)addTool:(MDrawTool *)tool;
--(void)removeTool:(MDrawTool *)tool;
-
 -(void)beginDrawingForType:(Class)toolType;
 -(void)finalizeDrawing;
+
+-(void)drawDown:(CGPoint)point;
+-(void)drawMove:(CGPoint)point;
+-(void)drawUp:(CGPoint)point;
 
 @end

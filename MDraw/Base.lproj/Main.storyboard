@@ -52,6 +52,16 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="4AE-P7-lxe"/>
+                                    <barButtonItem systemItem="undo" id="XiO-03-r8Q">
+                                        <connections>
+                                            <action selector="undo:" destination="BYZ-38-t0r" id="NYr-3m-l0W"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem systemItem="redo" id="RPW-jl-Cbu">
+                                        <connections>
+                                            <action selector="redo:" destination="BYZ-38-t0r" id="CdB-LV-jgm"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem title="Finish" id="E6D-ya-hLQ">
                                         <connections>
                                             <action selector="finishDrawing:" destination="BYZ-38-t0r" id="2rx-V5-E0x"/>

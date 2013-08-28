@@ -20,11 +20,13 @@
 //    CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #import "MDrawView.h"
+#import "MUndoManager.h"
 
 @implementation MDrawView
 {
     NSMutableArray *_tools;
     Class _drawToolClass;
+    MUndoManager *_undoManager;
 }
 
 
@@ -34,6 +36,7 @@
     {
         // Initialization code
         _tools = [[NSMutableArray alloc] init];
+        _undoManager = [[MUndoManager alloc] initWithTools:_tools];
         [self initGestures];
     }
     
@@ -53,22 +56,24 @@
 
 -(BOOL)undo
 {
+    if([_undoManager undo])
+    {
+        [self setNeedsDisplay];
+        return YES;
+    }
+    
     return NO;
 }
 
 -(BOOL)redo
 {
+    if([_undoManager redo])
+    {
+        [self setNeedsDisplay];
+        return YES;
+    }
+    
     return NO;
-}
-
--(void)addTool:(MDrawTool *)tool
-{
-    [_tools addObject:tool];
-}
-
--(void)removeTool:(MDrawTool *)tool
-{
-    [_tools removeObject:tool];
 }
 
 - (void)drawRect:(CGRect)rect
@@ -170,6 +175,8 @@
         {
             _activeTool = [[_drawToolClass alloc] initWithStartPoint:point];
             [_tools addObject:_activeTool];
+            
+            [_undoManager clearRedoes];
         }
         
         [self setNeedsDisplay];
@@ -211,12 +218,6 @@
     }
     
     [self setNeedsDisplay];
-}
-
--(void)drawFinish
-{
-    [_activeTool finalize];
-    _drawing = NO;
 }
 
 #pragma mark - hit tests

@@ -82,6 +82,16 @@
     [drawView finalizeDrawing];
 }
 
+-(IBAction)undo:(id)sender
+{
+    [drawView undo];
+}
+
+-(IBAction)redo:(id)sender
+{
+    [drawView redo];
+}
+
 
 
 @end
