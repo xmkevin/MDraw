@@ -107,6 +107,15 @@
     [self setNeedsDisplay];
 }
 
+-(void)deleteCurrentTool
+{
+    if(_activeTool)
+    {
+        [_tools removeObject:_activeTool];
+        _activeTool = Nil;
+    }
+}
+
 #pragma mark - private methods
 
 -(void)initGestures

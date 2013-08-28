@@ -29,14 +29,33 @@
 @property (nonatomic,readonly) MDrawTool *activeTool;
 @property (nonatomic,readonly) BOOL drawing;
 
+/**
+ * Undo the drawing
+ **/
 -(BOOL)undo;
+
+/**
+ * Redo the drawing
+ **/
 -(BOOL)redo;
 
+/**
+ * Select the drawing tool type
+ **/
 -(void)beginDrawingForType:(Class)toolType;
+
+/**
+ * Stop drawing.
+ **/
 -(void)finalizeDrawing;
 
 -(void)drawDown:(CGPoint)point;
 -(void)drawMove:(CGPoint)point;
 -(void)drawUp:(CGPoint)point;
+
+/**
+ * Delete the active tool
+ **/
+-(void)deleteCurrentTool;
 
 @end
