@@ -189,6 +189,7 @@ CG_INLINE CGPoint CGRectMid(CGRect rect)
     @protected
     BOOL _finalized;
     CGPoint _startPoint, _endPoint;
+    UIColor *_fillColor;
 }
 
 

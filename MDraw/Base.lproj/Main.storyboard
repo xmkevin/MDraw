@@ -51,6 +51,11 @@
                                             <action selector="drawPolyline:" destination="BYZ-38-t0r" id="HG5-mm-d4Q"/>
                                         </connections>
                                     </barButtonItem>
+                                    <barButtonItem title="Arrow" id="s8C-G8-2pk">
+                                        <connections>
+                                            <action selector="drawArrow:" destination="BYZ-38-t0r" id="h2b-BA-m3R"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="4AE-P7-lxe"/>
                                     <barButtonItem systemItem="undo" id="XiO-03-r8Q">
                                         <connections>

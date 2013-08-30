@@ -77,6 +77,11 @@
     [drawView beginDrawingForType:[MDrawPolyline class]];
 }
 
+-(IBAction)drawArrow:(id)sender
+{
+    [drawView beginDrawingForType:[MDrawArrow class]];
+}
+
 -(IBAction)finishDrawing:(id)sender
 {
     [drawView finalizeDrawing];

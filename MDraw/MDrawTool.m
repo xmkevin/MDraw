@@ -23,7 +23,6 @@
 
 @implementation MDrawTool
 {
-    UIColor *_handleFillColor;
 }
 
 @synthesize selected;
@@ -50,7 +49,7 @@
         self.color = [UIColor colorWithRed:0 green:255 blue:0 alpha:0.6];
         self.lineWidth = 3;
         
-        _handleFillColor = [UIColor colorWithRed:255 green:255 blue:255 alpha:0.6];
+        _fillColor = [UIColor colorWithRed:255 green:255 blue:255 alpha:0.6];
     }
     
     return self;
@@ -97,7 +96,8 @@
 
 -(void)drawHandle:(CGContextRef)ctx atPoint:(CGPoint)point
 {
-    CGContextSetFillColorWithColor(ctx, _handleFillColor.CGColor);
+    CGContextSetStrokeColorWithColor(ctx, self.color.CGColor);
+    CGContextSetFillColorWithColor(ctx, _fillColor.CGColor);
     CGRect handleRect = CGRectMake(point.x- HANDLE_SIZE /2, point.y- HANDLE_SIZE /2, HANDLE_SIZE, HANDLE_SIZE);
     CGContextSetLineWidth(ctx, 2);
     CGContextFillEllipseInRect(ctx, handleRect);
