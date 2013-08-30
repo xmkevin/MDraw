@@ -53,13 +53,21 @@
     
     CGContextFillPath(ctx);
     CGContextStrokePath(ctx);
+
+    
     CGContextRestoreGState(ctx);
     
     if (self.selected)
     {
+        CGContextSaveGState(ctx);
+        CGContextSetStrokeColorWithColor(ctx, self.color.CGColor);
+        CGContextSetFillColorWithColor(ctx, self.fillColor.CGColor);
+        
         [self drawHandle:ctx atPoint:_startPoint];
         [self drawHandle:ctx atPoint:_endPoint];
         [self drawHandle:ctx atPoint:CGPointMidPoint(_startPoint, _endPoint)];
+        
+        CGContextRestoreGState(ctx);
     }
     
    

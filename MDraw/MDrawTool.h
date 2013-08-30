@@ -132,6 +132,11 @@ CG_INLINE CGPoint CGRectMid(CGRect rect)
  **/
 @property (nonatomic,strong)UIColor *color;
 
+/**
+ * Fill color
+ **/
+@property (nonatomic,strong)UIColor *fillColor;
+
 
 /**
  * Init the tool with a start point.
@@ -189,7 +194,6 @@ CG_INLINE CGPoint CGRectMid(CGRect rect)
     @protected
     BOOL _finalized;
     CGPoint _startPoint, _endPoint;
-    UIColor *_fillColor;
 }
 
 

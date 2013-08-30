@@ -29,6 +29,7 @@
 @synthesize finalized = _finalized;
 @synthesize lineWidth;
 @synthesize color;
+@synthesize fillColor;
 
 
 -(CGRect)frame
@@ -47,9 +48,8 @@
         _endPoint = startPoint;
         
         self.color = [UIColor colorWithRed:0 green:255 blue:0 alpha:0.6];
+        self.fillColor = [UIColor colorWithRed:255 green:255 blue:255 alpha:0.6];
         self.lineWidth = 3;
-        
-        _fillColor = [UIColor colorWithRed:255 green:255 blue:255 alpha:0.6];
     }
     
     return self;
@@ -96,8 +96,6 @@
 
 -(void)drawHandle:(CGContextRef)ctx atPoint:(CGPoint)point
 {
-    CGContextSetStrokeColorWithColor(ctx, self.color.CGColor);
-    CGContextSetFillColorWithColor(ctx, _fillColor.CGColor);
     CGRect handleRect = CGRectMake(point.x- HANDLE_SIZE /2, point.y- HANDLE_SIZE /2, HANDLE_SIZE, HANDLE_SIZE);
     CGContextSetLineWidth(ctx, 2);
     CGContextFillEllipseInRect(ctx, handleRect);

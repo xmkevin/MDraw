@@ -139,7 +139,10 @@
 
 -(void)draw:(CGContextRef)ctx
 {
+    CGContextSaveGState(ctx);
+    
     CGContextSetStrokeColorWithColor(ctx, self.color.CGColor);
+    CGContextSetFillColorWithColor(ctx, self.fillColor.CGColor);
     CGContextSetLineWidth(ctx, self.lineWidth);
     
     CGContextBeginPath(ctx);
@@ -175,6 +178,8 @@
         CGPoint mid = CGRectMid(self.frame);
         [self drawHandle:ctx atPoint:mid];
     }
+    
+    CGContextRestoreGState(ctx);
 
 }
 
