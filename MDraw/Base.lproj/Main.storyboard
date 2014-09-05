@@ -31,6 +31,21 @@
                                             <action selector="drawLine:" destination="BYZ-38-t0r" id="plH-wb-oN2"/>
                                         </connections>
                                     </barButtonItem>
+                                    <barButtonItem title="Arrow" id="s8C-G8-2pk">
+                                        <connections>
+                                            <action selector="drawArrow:" destination="BYZ-38-t0r" id="h2b-BA-m3R"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Arc" id="6Je-Gu-mzr">
+                                        <connections>
+                                            <action selector="drawArc:" destination="BYZ-38-t0r" id="DQf-Mq-bqU"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Angle" id="WoA-UW-J4D">
+                                        <connections>
+                                            <action selector="drawAngle:" destination="BYZ-38-t0r" id="Wti-Z5-MF8"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem title="Rectangle" id="FeZ-cF-2TT">
                                         <connections>
                                             <action selector="drawRect:" destination="BYZ-38-t0r" id="ZQU-Vs-Bmn"/>
@@ -51,11 +66,6 @@
                                             <action selector="drawPolyline:" destination="BYZ-38-t0r" id="HG5-mm-d4Q"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem title="Arrow" id="s8C-G8-2pk">
-                                        <connections>
-                                            <action selector="drawArrow:" destination="BYZ-38-t0r" id="h2b-BA-m3R"/>
-                                        </connections>
-                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="4AE-P7-lxe"/>
                                     <barButtonItem systemItem="undo" id="XiO-03-r8Q">
                                         <connections>
@@ -65,11 +75,6 @@
                                     <barButtonItem systemItem="redo" id="RPW-jl-Cbu">
                                         <connections>
                                             <action selector="redo:" destination="BYZ-38-t0r" id="CdB-LV-jgm"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem title="Finish" id="E6D-ya-hLQ">
-                                        <connections>
-                                            <action selector="finishDrawing:" destination="BYZ-38-t0r" id="2rx-V5-E0x"/>
                                         </connections>
                                     </barButtonItem>
                                 </items>

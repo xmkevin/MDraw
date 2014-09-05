@@ -82,9 +82,14 @@
     [drawView beginDrawingForType:[MDrawArrow class]];
 }
 
--(IBAction)finishDrawing:(id)sender
+- (IBAction)drawArc:(id)sender
 {
-    [drawView finalizeDrawing];
+    [drawView beginDrawingForType:[MDrawArc class]];
+}
+
+- (IBAction)drawAngle:(id)sender
+{
+    [drawView beginDrawingForType:[MDrawAngle class]];
 }
 
 -(IBAction)undo:(id)sender
