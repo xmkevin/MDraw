@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		330B58CA19B98CFD0078C2FF /* MDrawAngle.m in Sources */ = {isa = PBXBuildFile; fileRef = 330B58BF19B98CFD0078C2FF /* MDrawAngle.m */; };
+		330B58CB19B98CFD0078C2FF /* MDrawArc.m in Sources */ = {isa = PBXBuildFile; fileRef = 330B58C119B98CFD0078C2FF /* MDrawArc.m */; };
+		330B58CC19B98CFD0078C2FF /* MDrawComment.m in Sources */ = {isa = PBXBuildFile; fileRef = 330B58C319B98CFD0078C2FF /* MDrawComment.m */; };
+		330B58CD19B98CFD0078C2FF /* MDrawFatArrow.m in Sources */ = {isa = PBXBuildFile; fileRef = 330B58C519B98CFD0078C2FF /* MDrawFatArrow.m */; };
+		330B58CE19B98CFD0078C2FF /* MDrawText.m in Sources */ = {isa = PBXBuildFile; fileRef = 330B58C819B98CFD0078C2FF /* MDrawText.m */; };
 		3317D07B17C6F40D008443C6 /* MDrawRect.m in Sources */ = {isa = PBXBuildFile; fileRef = 3317D07A17C6F40D008443C6 /* MDrawRect.m */; };
 		3317D07E17C74AF3008443C6 /* MDrawEllipse.m in Sources */ = {isa = PBXBuildFile; fileRef = 3317D07D17C74AF3008443C6 /* MDrawEllipse.m */; };
 		33AEF08417D07B21003C376A /* MDrawArrow.m in Sources */ = {isa = PBXBuildFile; fileRef = 33AEF08317D07B21003C376A /* MDrawArrow.m */; };
@@ -43,6 +48,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		330B58BE19B98CFD0078C2FF /* MDrawAngle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDrawAngle.h; sourceTree = "<group>"; };
+		330B58BF19B98CFD0078C2FF /* MDrawAngle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDrawAngle.m; sourceTree = "<group>"; };
+		330B58C019B98CFD0078C2FF /* MDrawArc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDrawArc.h; sourceTree = "<group>"; };
+		330B58C119B98CFD0078C2FF /* MDrawArc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDrawArc.m; sourceTree = "<group>"; };
+		330B58C219B98CFD0078C2FF /* MDrawComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDrawComment.h; sourceTree = "<group>"; };
+		330B58C319B98CFD0078C2FF /* MDrawComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDrawComment.m; sourceTree = "<group>"; };
+		330B58C419B98CFD0078C2FF /* MDrawFatArrow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDrawFatArrow.h; sourceTree = "<group>"; };
+		330B58C519B98CFD0078C2FF /* MDrawFatArrow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDrawFatArrow.m; sourceTree = "<group>"; };
+		330B58C619B98CFD0078C2FF /* MDrawMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDrawMath.h; sourceTree = "<group>"; };
+		330B58C719B98CFD0078C2FF /* MDrawText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDrawText.h; sourceTree = "<group>"; };
+		330B58C819B98CFD0078C2FF /* MDrawText.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDrawText.m; sourceTree = "<group>"; };
+		330B58C919B98CFD0078C2FF /* MDrawTool_Subclass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDrawTool_Subclass.h; sourceTree = "<group>"; };
 		3317D07917C6F40D008443C6 /* MDrawRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDrawRect.h; sourceTree = "<group>"; };
 		3317D07A17C6F40D008443C6 /* MDrawRect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDrawRect.m; sourceTree = "<group>"; };
 		3317D07C17C74AF3008443C6 /* MDrawEllipse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDrawEllipse.h; sourceTree = "<group>"; };
@@ -183,6 +200,18 @@
 		33E28BAC17C20DB500EFC071 /* DrawTool */ = {
 			isa = PBXGroup;
 			children = (
+				330B58BE19B98CFD0078C2FF /* MDrawAngle.h */,
+				330B58BF19B98CFD0078C2FF /* MDrawAngle.m */,
+				330B58C019B98CFD0078C2FF /* MDrawArc.h */,
+				330B58C119B98CFD0078C2FF /* MDrawArc.m */,
+				330B58C219B98CFD0078C2FF /* MDrawComment.h */,
+				330B58C319B98CFD0078C2FF /* MDrawComment.m */,
+				330B58C419B98CFD0078C2FF /* MDrawFatArrow.h */,
+				330B58C519B98CFD0078C2FF /* MDrawFatArrow.m */,
+				330B58C619B98CFD0078C2FF /* MDrawMath.h */,
+				330B58C719B98CFD0078C2FF /* MDrawText.h */,
+				330B58C819B98CFD0078C2FF /* MDrawText.m */,
+				330B58C919B98CFD0078C2FF /* MDrawTool_Subclass.h */,
 				33E28BAD17C20E6D00EFC071 /* MDrawTool.h */,
 				33E28BAE17C20E6D00EFC071 /* MDrawTool.m */,
 				33E28BB017C2140B00EFC071 /* MDrawView.h */,
@@ -302,8 +331,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				330B58CB19B98CFD0078C2FF /* MDrawArc.m in Sources */,
+				330B58CE19B98CFD0078C2FF /* MDrawText.m in Sources */,
 				33E28B8E17C20DA200EFC071 /* ViewController.m in Sources */,
 				33E28B8817C20DA200EFC071 /* AppDelegate.m in Sources */,
+				330B58CA19B98CFD0078C2FF /* MDrawAngle.m in Sources */,
 				3317D07E17C74AF3008443C6 /* MDrawEllipse.m in Sources */,
 				33D7940D17CAFA76007E2E94 /* MDrawPolyline.m in Sources */,
 				33E28BB217C2140B00EFC071 /* MDrawView.m in Sources */,
@@ -311,9 +343,11 @@
 				3317D07B17C6F40D008443C6 /* MDrawRect.m in Sources */,
 				33D7940A17CADB97007E2E94 /* MDrawFreeline.m in Sources */,
 				33C0988317CD8DB400C3EC1B /* MUndoManager.m in Sources */,
+				330B58CD19B98CFD0078C2FF /* MDrawFatArrow.m in Sources */,
 				33AEF08417D07B21003C376A /* MDrawArrow.m in Sources */,
 				33E28BAF17C20E6D00EFC071 /* MDrawTool.m in Sources */,
 				33DE966017C466B600A6F222 /* MDrawLine.m in Sources */,
+				330B58CC19B98CFD0078C2FF /* MDrawComment.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

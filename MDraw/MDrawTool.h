@@ -20,96 +20,25 @@
 //    CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #import <Foundation/Foundation.h>
+#include "MDrawMath.h"
+//#include "UIColor+String.h"
 
 #define HANDLE_SIZE 20
 #define NEAR_WIDTH 10
 
-CG_INLINE float CGPointDistance(CGPoint p1, CGPoint p2)
-{
-    CGFloat dx = p2.x - p1.x;
-    CGFloat dy = p2.y - p1.y;
-    return sqrt(dx*dx + dy*dy);
-}
-
-CG_INLINE CGSize CGPointOffset(CGPoint p1, CGPoint p2)
-{
-    CGFloat dx = p2.x - p1.x;
-    CGFloat dy = p2.y - p1.y;
-    return CGSizeMake(dx, dy);
-}
-
-CG_INLINE CGPoint CGPointMidPoint(CGPoint p1, CGPoint p2)
-{
-    return CGPointMake((p1.x + p2.x) * 0.5, (p1.y + p2.y) * 0.5);
-}
-
-CG_INLINE float CGPointToLineDistance(CGPoint p, CGPoint p1,CGPoint p2)
-{
-    float a = p1.y - p2.y;
-    float b = p2.x - p1.x;
-    float c = (p1.x - b) * p1.y - p1.x * (p1.y + a);
-    
-    return fabsf(a * p.x + b * p.y + c) / sqrtf(a*a + b*b);
-}
-
-CG_INLINE BOOL CGPointInRect(CGPoint p, CGRect rect)
-{
-    return (p.x >= rect.origin.x &&
-            p.x <= (rect.origin.x + rect.size.width) &&
-            p.y >= rect.origin.y &&
-            p.y <= (rect.origin.y + rect.size.height));
-}
-
-CG_INLINE CGPoint CGRectTL(CGRect rect)
-{
-    return rect.origin;
-}
-
-CG_INLINE CGPoint CGRectTM(CGRect rect)
-{
-    return CGPointMake(rect.origin.x + rect.size.width * 0.5, rect.origin.y);
-}
-
-CG_INLINE CGPoint CGRectTR(CGRect rect)
-{
-    return CGPointMake(rect.origin.x + rect.size.width, rect.origin.y);
-}
-
-CG_INLINE CGPoint CGRectRM(CGRect rect)
-{
-    return CGPointMake(rect.origin.x + rect.size.width, rect.origin.y + rect.size.height * 0.5);
-}
-
-CG_INLINE CGPoint CGRectBR(CGRect rect)
-{
-    return CGPointMake(rect.origin.x + rect.size.width, rect.origin.y + rect.size.height);
-}
-
-CG_INLINE CGPoint CGRectBM(CGRect rect)
-{
-    return CGPointMake(rect.origin.x + rect.size.width * 0.5, rect.origin.y + rect.size.height);
-}
-
-CG_INLINE CGPoint CGRectBL(CGRect rect)
-{
-    return CGPointMake(rect.origin.x , rect.origin.y + rect.size.height);
-}
-
-CG_INLINE CGPoint CGRectLM(CGRect rect)
-{
-    return CGPointMake(rect.origin.x , rect.origin.y + rect.size.height * 0.5);
-}
-
-CG_INLINE CGPoint CGRectMid(CGRect rect)
-{
-    return CGPointMake(rect.origin.x + rect.size.width * 0.5, rect.origin.y + rect.size.height * 0.5);
-}
+@class PMDraw;
 
 @protocol MDrawToolProtocol<NSObject>
 
+
 /**
- * Is the tool selected
- **/
+ *  Name of the tool.
+ */
+@property (nonatomic,strong)NSString *name;
+
+/**
+ *  Is the tool selected
+ */
 @property (nonatomic) BOOL selected;
 
 /**
@@ -133,10 +62,24 @@ CG_INLINE CGPoint CGRectMid(CGRect rect)
 @property (nonatomic,strong)UIColor *color;
 
 /**
- * Fill color
- **/
-@property (nonatomic,strong)UIColor *fillColor;
+ *  YES to show measurement information while No to hide
+ */
+@property (nonatomic,assign) BOOL showMeasurement;
 
+/**
+ *  How many μm per pixel, default value is 0, means it does not have a calibration.
+ */
+@property (nonatomic,assign) CGFloat calibration;
+
+/**
+ *  Displaying unit, default is px;
+ */
+@property (nonatomic,strong) NSString *unit;
+
+/**
+ *  Get the measure text for this tool.
+ */
+@property (nonatomic, readonly) NSString *measureText;
 
 /**
  * Init the tool with a start point.
@@ -177,12 +120,21 @@ CG_INLINE CGPoint CGRectMid(CGRect rect)
 /**
  * Move the tool or the selected handle to the new position.
  **/
--(void)moveToPoint:(CGPoint)point;
+-(void)moveByOffset:(CGSize)offset;
 
 /**
- * Draw itself on the contex
+ * Stop move the handle
  **/
--(void)draw:(CGContextRef)ctx;
+-(void)stopMoveHandle;
+
+/**
+ *  Draw itself on the context
+ *
+ *  @param ctx context to draw on
+ *
+ *  @param view The view to draw on
+ */
+-(void)draw:(CGContextRef)ctx inView:(UIView *)view;
 
 @end
 
@@ -191,13 +143,13 @@ CG_INLINE CGPoint CGRectMid(CGRect rect)
  **/
 @interface MDrawTool : NSObject <MDrawToolProtocol>
 {
-    @protected
+    
+@private
+    NSString *_unit;
+@protected
     BOOL _finalized;
     CGPoint _startPoint, _endPoint;
+    CGFloat _unitScale;
 }
-
-
--(void)drawHandle:(CGContextRef)ctx atPoint:(CGPoint)point;
--(BOOL)isPoint:(CGPoint)point onHandle:(CGPoint)handlePoint;
 
 @end

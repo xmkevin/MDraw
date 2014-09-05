@@ -19,7 +19,7 @@
 //    IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 //    CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-#import "MDrawTool.h"
+#import "MDrawLine.h"
 
 enum MDrawMoveDirection {
     MDrawMoveDirectionNone = 0,
@@ -34,7 +34,7 @@ enum MDrawMoveDirection {
     MDrawMoveDirectionLM = 9
 };
 
-@interface MDrawRect : MDrawTool
+@interface MDrawRect : MDrawLine
 {
     @protected
     enum MDrawMoveDirection _moveDirection;

@@ -23,25 +23,29 @@
 
 @implementation MDrawArrow
 
--(BOOL)hitTest:(CGPoint)point
+-(void)draw:(CGContextRef)ctx inView:(UIView *)view withoutMeasurement:(BOOL)noMeasurement
 {
-    return CGPointInRect(point, self.frame);
-}
-
--(void)draw:(CGContextRef)ctx
-{
-    CGFloat length = CGPointDistance(_startPoint, _endPoint);
-    CGSize dSize = CGPointOffset(_startPoint, _endPoint);
     
-    // Draw an arrow at the horizontal line and then rotate it.
-    // Here are the horizontal points.
+    if(CGPointEqualToPoint(_startPoint, _endPoint))
+    {
+        return;
+    }
+    
+    CGSize dSize = CGPointOffset(_startPoint, _endPoint);
+    //Draw a triagnle as the arrow, the default angle is 15 degree
+    //And the default half length is 2x line width.
+    float radian = 15.0 /180.0 * M_PI;
+    float length = self.lineWidth * 2;
+    float x =  length / tanf(radian);
     CGPoint p1 = CGPointZero;
-    CGPoint p2 = CGPointMake(p1.x + length * 0.6, p1.y + length * 0.4);
-    CGPoint p3 = CGPointMake(p1.x + length * 0.6, p1.y + length * 0.15);
-    CGPoint p4 = CGPointMake(p1.x + length, p1.y + length * 0.15);
-    CGPoint p5 = CGPointMake(p1.x + length, p1.y - length * 0.15);
-    CGPoint p6 = CGPointMake(p1.x + length * 0.6, p1.y - length * 0.15);
-    CGPoint p7 = CGPointMake(p1.x + length * 0.6, p1.y - length * 0.4);
+    CGPoint p2 = CGPointMake(x, p1.y - length);
+    CGPoint p3 = CGPointMake(x, p1.y + length);
+    
+    float lineRadian = atan2f(dSize.height, dSize.width);
+    float xOffset = x * cosf(lineRadian);
+    float yOffset = x * sinf(lineRadian);
+    CGPoint newStartPoint = CGPointMake(_startPoint.x + xOffset, _startPoint.y + yOffset);
+    
     
     CGContextSaveGState(ctx);
     
@@ -49,40 +53,36 @@
     CGContextSetFillColorWithColor(ctx, self.color.CGColor);
     CGContextSetLineWidth(ctx, self.lineWidth);
     
-    
+    //Draw line
     CGContextBeginPath(ctx);
+    CGContextMoveToPoint(ctx, newStartPoint.x, newStartPoint.y);
+    CGContextAddLineToPoint(ctx, _endPoint.x, _endPoint.y);
+    CGContextClosePath(ctx);
+    CGContextStrokePath(ctx);
     
+    //Draw the arrow
+    CGContextBeginPath(ctx);
     CGContextTranslateCTM(ctx, _startPoint.x,_startPoint.y);
     CGContextRotateCTM(ctx, atan2f(dSize.height,dSize.width));
-    
     CGContextMoveToPoint(ctx, p1.x, p1.y);
     CGContextAddLineToPoint(ctx, p2.x, p2.y);
     CGContextAddLineToPoint(ctx, p3.x, p3.y);
-    CGContextAddLineToPoint(ctx, p4.x, p4.y);
-    CGContextAddLineToPoint(ctx, p5.x, p5.y);
-    CGContextAddLineToPoint(ctx, p6.x, p6.y);
-    CGContextAddLineToPoint(ctx, p7.x, p7.y);
     CGContextClosePath(ctx);
-    
     CGContextFillPath(ctx);
-    CGContextStrokePath(ctx);
-
     
     CGContextRestoreGState(ctx);
     
     if (self.selected)
     {
-        CGContextSaveGState(ctx);
-        CGContextSetStrokeColorWithColor(ctx, self.color.CGColor);
-        CGContextSetFillColorWithColor(ctx, self.fillColor.CGColor);
-        
         [self drawHandle:ctx atPoint:_startPoint];
         [self drawHandle:ctx atPoint:_endPoint];
-        [self drawHandle:ctx atPoint:CGPointMidPoint(_startPoint, _endPoint)];
-        
-        CGContextRestoreGState(ctx);
     }
     
+//    if(!noMeasurement && self.finalized && self.showMeasurement)
+//    {
+//        [self drawMeasurement:ctx inView:view];
+//    }
+
    
 }
 

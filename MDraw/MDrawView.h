@@ -22,13 +22,65 @@
 #import <UIKit/UIKit.h>
 #import "MDrawTool.h"
 #import "MDrawLine.h"
+#import "MDrawRect.h"
+#import "MDrawEllipse.h"
 #import "MDrawFreeline.h"
+#import "MDrawPolyline.h"
 #import "MDrawArrow.h"
+#import "MDrawAngle.h"
+#import "MDrawArc.h"
+#import "MDrawText.h"
+#import "MDrawComment.h"
 
-@interface MDrawView : UIView <UIGestureRecognizerDelegate>
+@interface MDrawView : UIView <UIGestureRecognizerDelegate,MDrawCommentDelegate>
+
 
 @property (nonatomic,readonly) MDrawTool *activeTool;
 @property (nonatomic,readonly) BOOL drawing;
+
+/**
+ * The color of new drawing tool
+ **/
+@property (nonatomic) UIColor *color;
+/**
+ * The default line width of new tool
+ **/
+@property (nonatomic) CGFloat lineWidth;
+
+/**
+ *  Whether or not there are tools.
+ */
+@property (nonatomic,readonly) BOOL hasTools;
+
+/**
+ *  Tools on the view
+ */
+@property (nonatomic,readonly) NSArray *tools;
+
+/**
+ * Whether the view recevies gestures
+ **/
+@property (nonatomic) BOOL enableGesture;
+
+/**
+ *  YES to show measurement information.
+ */
+@property (nonatomic) BOOL showMeasurement;
+
+/**
+ *  um/pixel, if calibrated. default is 0.
+ */
+@property (nonatomic) CGFloat calibration;
+
+/**
+ *  Unit of measurement information
+ */
+@property (nonatomic,strong) NSString *unit;
+
+/**
+ * Whether or not the tools is dirty
+ */
+@property (nonatomic,readonly) BOOL isDirty;
 
 /**
  * Undo the drawing
@@ -51,12 +103,19 @@
 -(void)finalizeDrawing;
 
 -(void)drawDown:(CGPoint)point;
--(void)drawMove:(CGPoint)point;
+-(void)drawMoveFromPoint:(CGPoint)srcPoint toPoint:(CGPoint)point;
 -(void)drawUp:(CGPoint)point;
 
 /**
  * Delete the active tool
  **/
 -(void)deleteCurrentTool;
+
+/**
+ * Clear all tools
+ **/
+-(void)clearTools;
+
+-(void)selectNone;
 
 @end

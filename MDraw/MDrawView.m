@@ -27,7 +27,16 @@
     NSMutableArray *_tools;
     Class _drawToolClass;
     MUndoManager *_undoManager;
+    BOOL _isMoved; // Is mouse or figure moved
+    CGFloat _lineWidth;
+    BOOL _enableGesture;
+    BOOL _showMeasurement;
+    NSString *_unit;
 }
+
+@synthesize color;
+@synthesize calibration = _calibration;
+@synthesize isDirty = _isDirty;
 
 
 -(id)initWithCoder:(NSCoder *)aDecoder
@@ -37,6 +46,12 @@
         // Initialization code
         _tools = [[NSMutableArray alloc] init];
         _undoManager = [[MUndoManager alloc] initWithTools:_tools];
+        
+        self.color = [UIColor colorWithRed:0 green:255 blue:0 alpha:0.6];
+        _lineWidth = 3;
+        _calibration = 0;
+        
+        _enableGesture = YES;
         [self initGestures];
     }
     
@@ -53,6 +68,108 @@
     }
     return self;
 }
+
+- (void)refreshCalibrations
+{
+    for (MDrawTool *tool in _tools)
+    {
+        tool.calibration = self.calibration;
+        tool.unit = self.unit;
+        tool.showMeasurement = self.showMeasurement;
+    }
+    
+    [self setNeedsDisplay];
+}
+
+-(BOOL)hasTools
+{
+    return _tools.count > 0;
+}
+
+-(NSArray *)tools
+{
+    return _tools;
+}
+
+-(CGFloat)lineWidth
+{
+    return _lineWidth;
+}
+
+-(void)setLineWidth:(CGFloat)lineWidth
+{
+    if(_activeTool)
+    {
+        _activeTool.lineWidth = lineWidth;
+        
+        [self setNeedsDisplay];
+    }
+    
+    _lineWidth = lineWidth;
+}
+
+-(BOOL)enableGesture
+{
+    return _enableGesture;
+}
+
+-(void)setEnableGesture:(BOOL)enableGesture
+{
+    _enableGesture = enableGesture;
+    
+    for (UIGestureRecognizer *g in self.gestureRecognizers) {
+        g.enabled = _enableGesture;
+    }
+    
+    self.multipleTouchEnabled = _enableGesture;
+}
+
+-(BOOL)showMeasurement
+{
+    return _showMeasurement;
+}
+
+-(void)setShowMeasurement:(BOOL)showMeasurement
+{
+    _showMeasurement = showMeasurement;
+    
+    for (MDrawTool *tool in _tools) {
+        tool.showMeasurement = showMeasurement;
+    }
+    
+    [self setNeedsDisplay];
+    
+}
+
+- (CGFloat)calibration
+{
+    return _calibration;
+}
+
+- (void)setCalibration:(CGFloat)calibration
+{
+    _calibration = calibration;
+    
+    [self refreshCalibrations];
+}
+
+-(NSString *)unit
+{
+    if(_unit == Nil)
+    {
+        _unit = @"px";
+    }
+    
+    return _unit;
+}
+
+-(void)setUnit:(NSString *)unit
+{
+    _unit = unit;
+    
+    [self refreshCalibrations];
+}
+
 
 -(BOOL)undo
 {
@@ -78,17 +195,27 @@
 
 - (void)drawRect:(CGRect)rect
 {
-    // Drawing code
-    CGContextRef ctx = UIGraphicsGetCurrentContext();
-    CGContextClearRect(ctx,self.frame);
-    for (MDrawTool *tool in _tools)
-    {
-        [tool draw:ctx];
+    if (_tools && _tools.count > 0) {
+        // Drawing code
+        CGContextRef ctx = UIGraphicsGetCurrentContext();
+        //CGContextClearRect(ctx,self.frame);
+        for (MDrawTool *tool in _tools)
+        {
+            [tool draw:ctx inView:self];
+        }
     }
 }
 
 -(void)beginDrawingForType:(Class)toolType
 {
+    if(toolType == Nil)
+    {
+        _drawToolClass = Nil;
+        _drawing = NO;
+        
+        return;
+    }
+    
     if(_activeTool)
     {
         _activeTool.selected = NO;
@@ -111,8 +238,28 @@
 {
     if(_activeTool)
     {
-        [_tools removeObject:_activeTool];
+        [_undoManager removeTool:_activeTool];
         _activeTool = Nil;
+        
+        _isDirty = YES;
+        
+        [self setNeedsDisplay];
+    }
+}
+
+-(void)clearTools
+{
+    [_tools removeAllObjects];
+    [_undoManager reset];
+    [self setNeedsDisplay];
+}
+
+-(void)selectNone
+{
+    if(_activeTool)
+    {
+        _activeTool.selected = NO;
+        [self setNeedsDisplay];
     }
 }
 
@@ -147,17 +294,19 @@
     
     [self drawDown:point];
     
-    [super touchesBegan:touches withEvent:event];
+    
+    [self.nextResponder touchesBegan:touches withEvent:event];
 }
 
 -(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
     UITouch *touch = [[event allTouches] anyObject];
+    CGPoint prePoint = [touch previousLocationInView:self];
     CGPoint point = [touch locationInView:self];
     
-    [self drawMove:point];
+    [self drawMoveFromPoint:prePoint toPoint:point];
     
-    [super touchesMoved:touches withEvent:event];
+    [self.nextResponder touchesMoved:touches withEvent:event];
 }
 
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
@@ -167,13 +316,15 @@
     
     [self drawUp:point];
     
-    [super touchesEnded:touches withEvent:event];
+    [self.nextResponder touchesEnded:touches withEvent:event];
 }
 
 #pragma mark - draw
 
 -(void)drawDown:(CGPoint)point
 {
+    _isMoved = NO;
+    
     if(self.drawing)
     {
         if(_activeTool && !_activeTool.finalized && _drawing)
@@ -183,9 +334,21 @@
         else
         {
             _activeTool = [[_drawToolClass alloc] initWithStartPoint:point];
-            [_tools addObject:_activeTool];
+            _activeTool.color = self.color;
+            _activeTool.lineWidth = self.lineWidth;
+            _activeTool.showMeasurement = self.showMeasurement;
+            _activeTool.unit = self.unit;
+            _activeTool.calibration = self.calibration;
+            //Comment tool is special, it should interate with alert views.
+            if([_activeTool isKindOfClass:[MDrawComment class]])
+            {
+                MDrawComment *comment = (MDrawComment *)_activeTool;
+                comment.delegate = self;
+            }
             
-            [_undoManager clearRedoes];
+            [_undoManager addTool:_activeTool];
+            
+            _isDirty = YES;
         }
         
         [self setNeedsDisplay];
@@ -196,15 +359,19 @@
     }
 }
 
--(void)drawMove:(CGPoint)point
+-(void)drawMoveFromPoint:(CGPoint)srcPoint toPoint:(CGPoint)point
 {
+    _isMoved = YES;
+    _isDirty = YES;
+    
     if(self.drawing)
     {
         [self.activeTool drawMove:point];
     }
     else
     {
-        [self.activeTool moveToPoint:point];
+        CGSize offset = CGPointOffset(srcPoint, point);
+        [self.activeTool moveByOffset:offset];
     }
     
     [self setNeedsDisplay];
@@ -223,10 +390,21 @@
     }
     else
     {
-        [self.activeTool moveToPoint:point];
+        if(_isMoved)
+        {
+            [self.activeTool stopMoveHandle];
+        }
+        else
+        {
+            //Click or tap
+            [self selectTool:point];
+        }
+        
     }
     
     [self setNeedsDisplay];
+    
+    _isMoved = NO;
 }
 
 #pragma mark - hit tests
@@ -254,6 +432,20 @@
     }
     
     [self setNeedsDisplay];
+}
+
+#pragma mark - draw comment protocol
+
+-(void)drawTool:(MDrawTool *)tool isAdded:(BOOL)added
+{
+    if(added)
+    {
+        [self setNeedsDisplay];
+    }
+    else
+    {
+        [self deleteCurrentTool];
+    }
 }
 
 

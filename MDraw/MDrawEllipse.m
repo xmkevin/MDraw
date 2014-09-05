@@ -23,12 +23,9 @@
 
 @implementation MDrawEllipse
 
--(void)draw:(CGContextRef)ctx
+-(void)draw:(CGContextRef)ctx inView:(UIView *)view withoutMeasurement:(BOOL)noMeasurement
 {
-    CGContextSaveGState(ctx);
-    
     CGContextSetStrokeColorWithColor(ctx, self.color.CGColor);
-    CGContextSetFillColorWithColor(ctx, self.fillColor.CGColor);
     CGContextSetLineWidth(ctx, self.lineWidth);
     
     CGContextBeginPath(ctx);
@@ -46,10 +43,38 @@
         [self drawHandle:ctx atPoint:CGRectBM(frame)];
         [self drawHandle:ctx atPoint:CGRectBL(frame)];
         [self drawHandle:ctx atPoint:CGRectLM(frame)];
-        [self drawHandle:ctx atPoint:CGRectMid(frame)];
     }
     
-    CGContextRestoreGState(ctx);
+    if(!noMeasurement && self.finalized && self.showMeasurement)
+    {
+        [self drawMeasurement:ctx inView:view];
+    }
+}
+
+-(NSString *)measureText
+{
+    static NSString *radiusString, *areaString, *perimeterString;
+    if(!radiusString)
+    {
+        radiusString = NSLocalizedString(@"Radius", nil);
+        areaString = NSLocalizedString(@"Area", nil);
+        perimeterString = NSLocalizedString(@"Perimeter", nil);
+    }
+    
+    CGFloat radius = fabs((_startPoint.x - _endPoint.x)/2.0);
+    CGFloat area = M_PI * pow(radius, 2);
+    CGFloat perimeter = 2 * M_PI * radius;
+    
+    return [NSString stringWithFormat:@"%@: %0.2f %@\n%@: %0.2f sq%@\n%@: %0.2f %@",
+                     radiusString,
+                     [self unitConvert:radius isSquare:NO],
+                     self.unit,
+                     areaString,
+                     [self unitConvert:area isSquare:YES],
+                     self.unit,
+                     perimeterString,
+                     [self unitConvert:perimeter isSquare:NO],
+                     self.unit];
 }
 
 @end

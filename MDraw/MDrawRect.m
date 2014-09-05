@@ -47,6 +47,11 @@
     self.selected = YES;
 }
 
+-(BOOL)hitTest:(CGPoint)point
+{
+    return CGPointInRect(point, self.frame);
+}
+
 -(BOOL)hitOnHandle:(CGPoint)point
 {
     
@@ -98,7 +103,7 @@
         _moveDirection = MDrawMoveDirectionLM;
         return YES;
     }
-    if([self isPoint:point onHandle:CGRectMid(frame)])
+    if(CGPointInRect(point, frame))
     {
         _moveDirection = MDrawMoveDirectionWhole;
         return YES;
@@ -107,43 +112,39 @@
     return NO;
 }
 
--(void)moveToPoint:(CGPoint)point
+-(void)moveByOffset:(CGSize)offset
 {
     switch (_moveDirection) {
         case MDrawMoveDirectionTL:
-            _startPoint = point;
+            _startPoint = CGPointAddOffset(_startPoint, offset);
             break;
         case MDrawMoveDirectionTM:
-            _startPoint.y = point.y;
+            _startPoint.y += offset.height;
             break;
         case MDrawMoveDirectionTR:
-            _startPoint.y = point.y;
-            _endPoint.x = point.x;
+            _startPoint.y += offset.height;
+            _endPoint.x += offset.width;
             break;
         case MDrawMoveDirectionRM:
-            _endPoint.x = point.x;
+            _endPoint.x += offset.width;
             break;
         case MDrawMoveDirectionBR:
-            _endPoint = point;
+            _endPoint = CGPointAddOffset(_endPoint, offset);
             break;
         case MDrawMoveDirectionBM:
-            _endPoint.y = point.y;
+            _endPoint.y += offset.height;
             break;
         case MDrawMoveDirectionBL:
-            _startPoint.x = point.x;
-            _endPoint.y = point.y;
+            _startPoint.x += offset.width;
+            _endPoint.y += offset.height;
             break;
         case MDrawMoveDirectionLM:
-            _startPoint.x = point.x;
+            _startPoint.x += offset.width;
             break;
         case MDrawMoveDirectionWhole:
         {
-            CGPoint preMiddle = CGPointMidPoint(_startPoint, _endPoint);
-            CGSize offset = CGPointOffset(preMiddle, point);
-            _startPoint.x += offset.width;
-            _startPoint.y += offset.height;
-            _endPoint.x += offset.width;
-            _endPoint.y += offset.height;
+            _startPoint = CGPointAddOffset(_startPoint, offset);
+            _endPoint = CGPointAddOffset(_endPoint, offset);
             break;
         }
         default:
@@ -151,12 +152,14 @@
     }
 }
 
--(void)draw:(CGContextRef)ctx
+-(void)stopMoveHandle
 {
-    CGContextSaveGState(ctx);
-    
+    _moveDirection = MDrawMoveDirectionNone;
+}
+
+-(void)draw:(CGContextRef)ctx inView:(UIView *)view withoutMeasurement:(BOOL)noMeasurement
+{
     CGContextSetStrokeColorWithColor(ctx, self.color.CGColor);
-    CGContextSetFillColorWithColor(ctx, self.fillColor.CGColor);
     CGContextSetLineWidth(ctx, self.lineWidth);
     
     CGContextBeginPath(ctx);
@@ -174,11 +177,37 @@
         [self drawHandle:ctx atPoint:CGRectBM(frame)];
         [self drawHandle:ctx atPoint:CGRectBL(frame)];
         [self drawHandle:ctx atPoint:CGRectLM(frame)];
-        [self drawHandle:ctx atPoint:CGRectMid(frame)];
     }
     
-    CGContextRestoreGState(ctx);
+    if(!noMeasurement && self.finalized && self.showMeasurement)
+    {
+        [self drawMeasurement:ctx inView:view];
+    }
 
+}
+
+-(NSString *)measureText
+{
+    static NSString *widthString, *heightString, *areaString;
+    if(!widthString)
+    {
+        widthString = NSLocalizedString(@"Width", nil);
+        heightString = NSLocalizedString(@"Height", Nil);
+        areaString = NSLocalizedString(@"Area", Nil);
+    }
+    
+    CGRect frame = self.frame;
+    
+    return [NSString stringWithFormat:@"%@: %0.2f %@\n%@: %0.2f %@\n%@: %0.2f sq%@",
+                             widthString,
+                             [self unitConvert:frame.size.width isSquare:NO],
+                             self.unit,
+                             heightString,
+                             [self unitConvert:frame.size.height isSquare:NO],
+                             self.unit,
+                             areaString,
+                             [self unitConvert:frame.size.width * frame.size.height isSquare:YES],
+                             self.unit];
 }
 
 @end

@@ -23,14 +23,66 @@
 
 @implementation MDrawTool
 {
+    UIColor *_handleFillColor;
 }
 
+@synthesize name;
 @synthesize selected;
 @synthesize finalized = _finalized;
 @synthesize lineWidth;
 @synthesize color;
-@synthesize fillColor;
+@synthesize showMeasurement;
+@synthesize calibration;
+@synthesize measureText;
 
+-(id)init
+{
+    if(self = [super init])
+    {
+        _handleFillColor = [UIColor colorWithRed:255 green:255 blue:255 alpha:0.6];
+        self.lineWidth = 3;
+        self.calibration = 0;
+        self.unit = @"px";
+        _unitScale = 1;
+    }
+    
+    return self;
+}
+
+-(id)initWithStartPoint:(CGPoint)startPoint
+{
+    if(self=[self init])
+    {
+        _startPoint = startPoint;
+        _endPoint = startPoint;
+    }
+    
+    return self;
+}
+
+-(NSString *)unit
+{
+    return [_unit copy];
+}
+
+-(void)setUnit:(NSString *)unit
+{
+    _unit = unit;
+    _unitScale = 1;
+    
+    if([_unit isEqualToString:@"μm"] || [_unit isEqualToString:@"um"])
+    {
+        _unitScale = 1;
+    }
+    else if([_unit isEqualToString:@"mm"])
+    {
+        _unitScale = 1 / 1000.0;
+    }
+    else if([_unit isEqualToString:@"cm"])
+    {
+        _unitScale = 1 / 1000000.0;
+    }
+}
 
 -(CGRect)frame
 {
@@ -38,21 +90,6 @@
                       MIN(_startPoint.y, _endPoint.y),
                       fabsf(_endPoint.x - _startPoint.x),
                       fabsf(_endPoint.y - _startPoint.y));
-}
-
--(id)initWithStartPoint:(CGPoint)startPoint
-{
-    if(self=[super init])
-    {
-        _startPoint = startPoint;
-        _endPoint = startPoint;
-        
-        self.color = [UIColor colorWithRed:0 green:255 blue:0 alpha:0.6];
-        self.fillColor = [UIColor colorWithRed:255 green:255 blue:255 alpha:0.6];
-        self.lineWidth = 3;
-    }
-    
-    return self;
 }
 
 -(void)drawDown:(CGPoint)point
@@ -82,20 +119,31 @@
     return NO;
 }
 
--(void)moveToPoint:(CGPoint)point
+-(void)moveByOffset:(CGSize)offset
 {
 }
 
--(void)draw:(CGContextRef)ctx
+-(void)stopMoveHandle
 {
 }
 
-#pragma mark - protected methods 
+-(void)draw:(CGContextRef)ctx inView:(UIView *)view
+{
+    [self draw:ctx inView:view withoutMeasurement:NO];
+}
+
+-(void)draw:(CGContextRef)ctx inView:(UIView *)view withoutMeasurement:(BOOL)noMeasurement
+{
+}
+
+#pragma mark - protected methods
 
 //TODO: decide where to put these protected methods.
 
 -(void)drawHandle:(CGContextRef)ctx atPoint:(CGPoint)point
 {
+    CGContextSetFillColorWithColor(ctx, _handleFillColor.CGColor);
+    CGContextSetStrokeColorWithColor(ctx, self.color.CGColor);
     CGRect handleRect = CGRectMake(point.x- HANDLE_SIZE /2, point.y- HANDLE_SIZE /2, HANDLE_SIZE, HANDLE_SIZE);
     CGContextSetLineWidth(ctx, 2);
     CGContextFillEllipseInRect(ctx, handleRect);
@@ -106,6 +154,75 @@
 {
     CGRect handleRect = CGRectMake(handlePoint.x- HANDLE_SIZE /2, handlePoint.y- HANDLE_SIZE /2, HANDLE_SIZE, HANDLE_SIZE);
     return CGPointInRect(point, handleRect);
+}
+
+-(void)drawMeasurement:(CGContextRef)ctx inView:(UIView *)view
+{
+    
+    NSString *text = self.measureText;
+    if(text == Nil)
+    {
+        return;
+    }
+    
+    CGSize textSize = CGSizeZero;
+    UIFont *textFont = [UIFont systemFontOfSize:14];
+    
+    if(text != Nil)
+    {
+            textSize= [text sizeWithFont:textFont
+                               constrainedToSize:CGSizeMake(1024, 99999.0)
+                                   lineBreakMode:NSLineBreakByWordWrapping];
+        
+    }
+    
+    CGRect textFrame = [self calculateTextFrameWithTextSize:textSize forToolFrame:self.frame inViewFrame:view.frame];
+    CGRect textBgFrame = CGRectMake(textFrame.origin.x - 10, textFrame.origin.y - 10, textFrame.size.width + 20, textFrame.size.height + 20);
+    CGContextSetFillColorWithColor(ctx, [UIColor colorWithRed:255 green:255 blue:255 alpha:0.5].CGColor);
+    CGContextFillRect(ctx, textBgFrame);
+    
+    [text drawWithRect:textFrame options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName: textFont} context:Nil];
+    
+}
+
+-(CGRect)calculateTextFrameWithTextSize:(CGSize)textSize forToolFrame:(CGRect)toolFrame inViewFrame:(CGRect)viewFrame
+{
+    static CGFloat MARGIN = 20;
+    
+    CGRect textFrame = CGRectZero;
+    CGFloat top = toolFrame.origin.y;
+    CGFloat bottom = viewFrame.size.height - (toolFrame.origin.y + toolFrame.size.height);
+    
+    //Prefer top position, 64 is the navigation bar height
+    if(top - textSize.height - MARGIN - 64 > 0 || top > bottom)
+    {
+        CGPoint midPoint = CGRectMid(toolFrame);
+        textFrame = CGRectMake(midPoint.x - textSize.width / 2.0f, toolFrame.origin.y - textSize.height - MARGIN, textSize.width, textSize.height);
+    }
+    else
+    {
+        CGPoint midPoint = CGRectMid(toolFrame);
+        textFrame = CGRectMake(midPoint.x - textSize.width / 2.0f, toolFrame.origin.y + toolFrame.size.height + MARGIN, textSize.width, textSize.height);
+    }
+    
+    return textFrame;
+    
+}
+
+-(CGFloat)unitConvert:(CGFloat)pixels isSquare:(BOOL)square
+{
+    if([_unit isEqualToString:@"px"])
+    {
+        return pixels;
+    }
+    
+    CGFloat result = pixels * self.calibration * _unitScale;
+    if(square)
+    {
+        result *= ( self.calibration * _unitScale );
+    }
+    
+    return result;
 }
 
 @end

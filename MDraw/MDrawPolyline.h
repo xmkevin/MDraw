@@ -19,9 +19,16 @@
 //    IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 //    CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-#import "MDrawTool.h"
+#import "MDrawTool_Subclass.h"
 
 @interface MDrawPolyline : MDrawTool
+{
+    @protected
+    NSMutableArray *_points;
+    CGPoint _movePoint;
+    int _moveHandleIndex;
+    BOOL _closePath;
+}
 
 
 

@@ -26,6 +26,27 @@
     NSMutableArray *_points;
 }
 
+-(id)init
+{
+    if(self = [super init])
+    {
+        _points = [[NSMutableArray alloc] init];
+    }
+    
+    return self;
+}
+
+-(id)initWithStartPoint:(CGPoint)startPoint
+{
+    self = [super initWithStartPoint:startPoint];
+    if(self)
+    {
+        _points = [[NSMutableArray alloc] init];
+    }
+    
+    return self;
+}
+
 -(CGRect)frame
 {
     CGPoint tl, rb;
@@ -55,17 +76,6 @@
     
 }
 
--(id)initWithStartPoint:(CGPoint)startPoint
-{
-    self = [super initWithStartPoint:startPoint];
-    if(self)
-    {
-        _points = [[NSMutableArray alloc] init];
-    }
-    
-    return self;
-}
-
 -(void)drawMove:(CGPoint)point
 {
     [_points addObject:[NSValue valueWithCGPoint:point]];
@@ -88,7 +98,8 @@
     _moveDirection = MDrawMoveDirectionNone;
     
     CGRect frame = self.frame;
-    if([self isPoint:point onHandle:CGRectMid(frame)])
+    
+    if(CGPointInRect(point, frame))
     {
         _moveDirection = MDrawMoveDirectionWhole;
         return YES;
@@ -97,13 +108,10 @@
     return NO;
 }
 
--(void)moveToPoint:(CGPoint)point
+-(void)moveByOffset:(CGSize)offset
 {
     if(_moveDirection == MDrawMoveDirectionWhole)
     {
-        CGPoint lastPoint = CGRectMid(self.frame);
-        CGSize offset = CGPointOffset(lastPoint, point);
-        
         for (int i = 0; i < _points.count; i++) {
             CGPoint p = [[_points objectAtIndex:i] CGPointValue];
             p.x += offset.width;
@@ -114,12 +122,9 @@
     }
 }
 
--(void)draw:(CGContextRef)ctx
+-(void)draw:(CGContextRef)ctx inView:(UIView *)view withoutMeasurement:(BOOL)noMeasurement
 {
-    CGContextSaveGState(ctx);
-    
     CGContextSetStrokeColorWithColor(ctx, self.color.CGColor);
-    CGContextSetFillColorWithColor(ctx, self.fillColor.CGColor);
     CGContextSetLineWidth(ctx, self.lineWidth);
     
     CGContextBeginPath(ctx);
@@ -140,12 +145,31 @@
     
     if (self.selected)
     {
-        CGRect frame = self.frame;
-        [self drawHandle:ctx atPoint:CGRectMid(frame)];
+        [self drawHandle:ctx atPoint:CGRectMid(self.frame)];
+        
     }
     
-    CGContextRestoreGState(ctx);
+    if(!noMeasurement && self.finalized && self.showMeasurement)
+    {
+        [self drawMeasurement:ctx inView:view];
+    }
 
+}
+
+-(NSString *)measureText
+{
+    static NSString *lengthString;
+    if(!lengthString)
+    {
+        lengthString = NSLocalizedString(@"Length", Nil);
+    }
+    
+    CGFloat length = CGPolygonLength(_points);
+    
+    return [NSString stringWithFormat:@"%@: %0.2f %@",
+            lengthString,
+            [self unitConvert:length isSquare:NO],
+            self.unit];
 }
 
 @end

@@ -29,11 +29,6 @@
 
 -(BOOL)hitTest:(CGPoint)point
 {
-    if(![super hitTest:point])
-    {
-        return NO;
-    }
-    
     float distance = CGPointToLineDistance(point, _startPoint, _endPoint);
     if(distance <= NEAR_WIDTH)
     {
@@ -59,7 +54,7 @@
         return YES;
     }
     
-    if([self isPoint:point onHandle:CGPointMidPoint(_startPoint, _endPoint)])
+    if([self hitTest:point])
     {
         _handleHitStatus = 3;
         return YES;
@@ -68,26 +63,29 @@
     return NO;
 }
 
--(void)moveToPoint:(CGPoint)point
+-(void)moveByOffset:(CGSize)offset
 {
     
     if(_handleHitStatus == 1)
     {
-        _startPoint = point;
+        _startPoint = CGPointAddOffset(_startPoint, offset);
     }
     else if(_handleHitStatus == 2)
     {
-        _endPoint = point;
+        _endPoint = CGPointAddOffset(_endPoint, offset);
     }
     else if(_handleHitStatus == 3)
     {
-        CGPoint preMidPoint = CGPointMidPoint(_startPoint, _endPoint);
-        CGSize offset = CGPointOffset(preMidPoint, point);
         _startPoint.x += offset.width;
         _startPoint.y += offset.height;
         _endPoint.x += offset.width;
         _endPoint.y += offset.height;
     }
+}
+
+-(void)stopMoveHandle
+{
+    _handleHitStatus = 0;
 }
 
 -(void)drawDown:(CGPoint)point
@@ -122,12 +120,9 @@
     self.selected = YES;
 }
 
--(void)draw:(CGContextRef)ctx
+-(void)draw:(CGContextRef)ctx inView:(UIView *)view withoutMeasurement:(BOOL)noMeasurement
 {
-    CGContextSaveGState(ctx);
-    
     CGContextSetStrokeColorWithColor(ctx, self.color.CGColor);
-    CGContextSetFillColorWithColor(ctx, self.fillColor.CGColor);
     CGContextSetLineWidth(ctx, self.lineWidth);
     
     CGContextBeginPath(ctx);
@@ -139,11 +134,31 @@
     {
         [self drawHandle:ctx atPoint:_startPoint];
         [self drawHandle:ctx atPoint:_endPoint];
-        [self drawHandle:ctx atPoint:CGPointMidPoint(_startPoint, _endPoint)];
     }
     
-    CGContextRestoreGState(ctx);
+    if(!noMeasurement && self.finalized && self.showMeasurement)
+    {
+        [self drawMeasurement:ctx inView:view];
+    }
 
+}
+
+-(NSString *)measureText
+{
+    static NSString *lengthText;
+    if(!lengthText)
+    {
+        lengthText = NSLocalizedString(@"Length", nil);
+    }
+    
+    CGFloat length = CGPointDistance(_startPoint, _endPoint);
+    length = [self unitConvert:length isSquare:NO];
+    
+    return [NSString stringWithFormat:@"%@ : %0.2f %@",
+                      lengthText,
+                      length,
+                      self.unit];
+    
 }
 
 @end

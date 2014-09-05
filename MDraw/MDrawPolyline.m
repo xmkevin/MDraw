@@ -22,10 +22,19 @@
 #import "MDrawPolyline.h"
 
 @implementation MDrawPolyline
+
+
+-(id)init
 {
-    NSMutableArray *_points;
-    CGPoint _movePoint;
-    int _moveHandleIndex;
+    if(self = [super init])
+    {
+        _points = [[NSMutableArray alloc] init];
+        _movePoint= CGPointZero;
+        _moveHandleIndex = -1;
+        _closePath = YES;
+    }
+    
+    return self;
 }
 
 -(id)initWithStartPoint:(CGPoint)startPoint
@@ -36,11 +45,14 @@
         _points = [[NSMutableArray alloc] init];
         _movePoint= CGPointZero;
         _moveHandleIndex = -1;
+        _closePath = YES;
         [_points addObject:[NSValue valueWithCGPoint:startPoint]];
     }
     
     return self;
 }
+
+
 
 -(CGRect)frame
 {
@@ -82,7 +94,27 @@
 -(void)drawUp:(CGPoint)point
 {
     _movePoint = CGPointZero;
-    [_points addObject:[NSValue valueWithCGPoint:point]];
+    
+    BOOL isStartPoint = NO;
+    if(_points.count > 0 )
+    {
+        CGPoint startPoint = [[_points objectAtIndex:0] CGPointValue];
+        if([self isPoint:point onHandle:startPoint])
+        {
+            isStartPoint = YES;
+        }
+    }
+    
+    if(!isStartPoint)
+    {
+        [_points addObject:[NSValue valueWithCGPoint:point]];
+    }
+    
+    //User close this shape by clicking the start point.
+    if(isStartPoint && _points.count > 1)
+    {
+        [self finalize];
+    }
 }
 
 -(void)finalize
@@ -98,12 +130,6 @@
     
     if(_points.count > 0 )
     {
-        if([self isPoint:point onHandle:CGRectMid(self.frame)])
-        {
-            _moveHandleIndex = -2;
-            return YES;
-        }
-        
         for (int i = 0; i < _points.count; i++)
         {
             CGPoint handlePoint = [[_points objectAtIndex:i] CGPointValue];
@@ -113,22 +139,27 @@
                 return YES;
             }
         }
+        
+        if(CGPointInRect(point, self.frame))
+        {
+            _moveHandleIndex = -2;
+            return YES;
+        }
     }
     
     return NO;
 }
 
--(void)moveToPoint:(CGPoint)point
+-(void)moveByOffset:(CGSize)offset
 {
     if(_moveHandleIndex >= 0)
     {
-        [_points replaceObjectAtIndex:_moveHandleIndex withObject:[NSValue valueWithCGPoint:point]];
+        CGPoint movePoint = [[_points objectAtIndex:_moveHandleIndex] CGPointValue];
+        movePoint = CGPointAddOffset(movePoint, offset);
+        [_points replaceObjectAtIndex:_moveHandleIndex withObject:[NSValue valueWithCGPoint:movePoint]];
     }
     else if( _moveHandleIndex == -2) // move the shape
     {
-        CGPoint midPoint = CGRectMid(self.frame);
-        CGSize offset = CGPointOffset(midPoint, point);
-        
         for (int i = 0; i < _points.count; i++)
         {
             CGPoint p = [[_points objectAtIndex:i] CGPointValue];
@@ -137,12 +168,14 @@
     }
 }
 
--(void)draw:(CGContextRef)ctx
+-(void)stopMoveHandle
 {
-    CGContextSaveGState(ctx);
-    
+    _moveHandleIndex = -1;
+}
+
+-(void)draw:(CGContextRef)ctx inView:(UIView *)view withoutMeasurement:(BOOL)noMeasurement
+{
     CGContextSetStrokeColorWithColor(ctx, self.color.CGColor);
-    CGContextSetFillColorWithColor(ctx, self.fillColor.CGColor);
     CGContextSetLineWidth(ctx, self.lineWidth);
     
     CGContextBeginPath(ctx);
@@ -163,11 +196,17 @@
             CGContextAddLineToPoint(ctx, _movePoint.x,_movePoint.y);
         }
         
+        //Close the shape
+        if(self.finalized && _closePath)
+        {
+            CGContextClosePath(ctx);
+        }
+        
     }
     
     CGContextStrokePath(ctx);
     
-    if (self.selected)
+    if (self.selected || !self.finalized)
     {
         for (int i = 0; i < _points.count; i++)
         {
@@ -175,12 +214,33 @@
             [self drawHandle:ctx atPoint:p];
         }
         
-        CGPoint mid = CGRectMid(self.frame);
-        [self drawHandle:ctx atPoint:mid];
     }
     
-    CGContextRestoreGState(ctx);
+    if(!noMeasurement && self.finalized && self.showMeasurement)
+    {
+        [self drawMeasurement:ctx inView:view];
+    }
 
+}
+
+-(NSString *)measureText
+{
+    static NSString *lengthString, *areaString;
+    if(!lengthString)
+    {
+        lengthString = NSLocalizedString(@"Length", Nil);
+        areaString = NSLocalizedString(@"Area", Nil);
+    }
+    
+    CGFloat length = CGPolygonLength(_points);
+    CGFloat area = CGPolygonArea(_points);
+    return [NSString stringWithFormat:@"%@: %0.2f %@\n%@: %0.2f sq%@",
+            lengthString,
+            [self unitConvert:length isSquare:NO],
+            self.unit,
+            areaString,
+            [self unitConvert:area isSquare:YES],
+            self.unit];
 }
 
 @end
