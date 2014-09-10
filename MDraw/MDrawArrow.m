@@ -23,6 +23,11 @@
 
 @implementation MDrawArrow
 
+- (NSString *)measureText
+{
+    return nil;
+}
+
 -(void)draw:(CGContextRef)ctx
 {
     

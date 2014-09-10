@@ -7,8 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
-@class MDrawTool;
+#import "MDrawTool.h"
 
 /**
  *  Show measurement info for tools.
@@ -18,5 +17,7 @@
 @property (nonatomic,weak,readonly) MDrawTool *tool;
 
 - (instancetype)initWithTool:(MDrawTool *)aTool;
+
+- (void)draw:(CGContextRef)ctx;
 
 @end

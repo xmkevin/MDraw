@@ -20,10 +20,15 @@
 //    CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #import "MDrawTool.h"
+#import "MDrawMeasurementInfo.h"
+
 
 @implementation MDrawTool
 {
     UIColor *_handleFillColor;
+    NSString *_unit;
+    
+    MDrawMeasurementInfo *_measurement;
 }
 
 @synthesize name;
@@ -131,9 +136,21 @@
 {
 }
 
-#pragma mark - protected methods
+- (void)drawMeasurement:(CGContextRef)ctx
+{
+    BOOL needDraw = self.showMeasurement && self.finalized && !self.selected && self.measureText;
+    if (!needDraw) {
+        return;
+    }
+    
+    if (!_measurement) {
+        _measurement = [[MDrawMeasurementInfo alloc] initWithTool:self];
+    }
+    
+    [_measurement draw:ctx];
+}
 
-//TODO: decide where to put these protected methods.
+#pragma mark - protected methods
 
 -(void)drawHandle:(CGContextRef)ctx atPoint:(CGPoint)point
 {
@@ -151,51 +168,9 @@
     return CGPointInRect(point, handleRect);
 }
 
--(void)drawMeasurement:(CGContextRef)ctx
-{
-    
-    NSString *text = self.measureText;
-    if(text == Nil)
-    {
-        return;
-    }
-    
-    CGSize textSize = CGSizeZero;
-    UIFont *textFont = [UIFont systemFontOfSize:14];
-    
-    if(text != Nil)
-    {
-            textSize= [text sizeWithFont:textFont
-                               constrainedToSize:CGSizeMake(1024, 99999.0)
-                                   lineBreakMode:NSLineBreakByWordWrapping];
-        
-    }
-    
-    CGRect textFrame = [self calculateTextFrameWithTextSize:textSize forToolFrame:self.frame];
-    CGRect textBgFrame = CGRectMake(textFrame.origin.x - 10, textFrame.origin.y - 10, textFrame.size.width + 20, textFrame.size.height + 20);
-    CGContextSetFillColorWithColor(ctx, [UIColor colorWithRed:255 green:255 blue:255 alpha:0.5].CGColor);
-    CGContextFillRect(ctx, textBgFrame);
-    
-    [text drawWithRect:textFrame options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName: textFont} context:Nil];
-    
-}
-
--(CGRect)calculateTextFrameWithTextSize:(CGSize)textSize forToolFrame:(CGRect)toolFrame
-{
-    static CGFloat MARGIN = 20;
-    
-    CGRect textFrame = CGRectZero;
-    CGPoint midPoint = CGRectMid(toolFrame);
-    textFrame = CGRectMake(midPoint.x - textSize.width / 2.0f, toolFrame.origin.y - textSize.height - MARGIN, textSize.width, textSize.height);
-    
-    return textFrame;
-    
-}
-
 -(CGFloat)unitConvert:(CGFloat)pixels isSquare:(BOOL)square
 {
-    if([_unit isEqualToString:@"px"])
-    {
+    if (self.calibration == 0) {
         return pixels;
     }
     

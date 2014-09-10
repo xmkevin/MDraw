@@ -44,6 +44,8 @@
     
 //    drawView = [[MDrawView alloc] initWithFrame:self.view.frame];
 //    [self.view addSubview:drawView];
+    
+    drawView.showMeasurement = YES;
 }
 
 - (void)didReceiveMemoryWarning

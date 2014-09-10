@@ -202,6 +202,7 @@
         for (MDrawTool *tool in _tools)
         {
             [tool draw:ctx];
+            [tool drawMeasurement:ctx];
         }
     }
 }

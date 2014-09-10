@@ -139,6 +139,13 @@
  */
 @property (nonatomic, readonly) NSString *measureText;
 
+/**
+ *  Draw measurement information
+ *
+ *  @param ctx The context to draw on.
+ */
+- (void)drawMeasurement:(CGContextRef)ctx;
+
 @end
 
 /**
@@ -146,9 +153,6 @@
  **/
 @interface MDrawTool : NSObject <MDrawToolProtocol, MDrawToolMeasurementProtocol>
 {
-    
-@private
-    NSString *_unit;
 @protected
     BOOL _finalized;
     CGPoint _startPoint, _endPoint;
