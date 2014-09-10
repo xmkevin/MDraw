@@ -26,7 +26,7 @@
     return self;
 }
 
--(void)draw:(CGContextRef)ctx inView:(UIView *)view
+-(void)draw:(CGContextRef)ctx
 {
     if(!self.backgroundColor)
     {

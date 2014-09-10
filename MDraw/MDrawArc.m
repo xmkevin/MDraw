@@ -23,7 +23,7 @@
     [self finalize];
 }
 
--(void)draw:(CGContextRef)ctx inView:(UIView *)view withoutMeasurement:(BOOL)noMeasurement
+-(void)draw:(CGContextRef)ctx
 {
     if(self.finalized)
     {
@@ -47,13 +47,10 @@
     }
     else
     {
-        [super draw:ctx inView:view withoutMeasurement:YES];
+        [super draw:ctx];
     }
     
-    if(!noMeasurement && self.finalized && self.showMeasurement)
-    {
-        [self drawMeasurement:ctx inView:view];
-    }
+    
 }
 
 -(NSString *)measureText

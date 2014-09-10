@@ -23,7 +23,7 @@
 
 @implementation MDrawArrow
 
--(void)draw:(CGContextRef)ctx inView:(UIView *)view withoutMeasurement:(BOOL)noMeasurement
+-(void)draw:(CGContextRef)ctx
 {
     
     if(CGPointEqualToPoint(_startPoint, _endPoint))
@@ -76,14 +76,7 @@
     {
         [self drawHandle:ctx atPoint:_startPoint];
         [self drawHandle:ctx atPoint:_endPoint];
-    }
-    
-//    if(!noMeasurement && self.finalized && self.showMeasurement)
-//    {
-//        [self drawMeasurement:ctx inView:view];
-//    }
-
-   
+    }   
 }
 
 @end

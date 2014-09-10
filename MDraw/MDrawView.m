@@ -201,7 +201,7 @@
         //CGContextClearRect(ctx,self.frame);
         for (MDrawTool *tool in _tools)
         {
-            [tool draw:ctx inView:self];
+            [tool draw:ctx];
         }
     }
 }

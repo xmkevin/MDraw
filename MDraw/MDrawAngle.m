@@ -62,9 +62,9 @@
     }
 }
 
--(void)draw:(CGContextRef)ctx inView:(UIView *)view withoutMeasurement:(BOOL)noMeasurement
+-(void)draw:(CGContextRef)ctx
 {
-    [super draw:ctx inView:view withoutMeasurement:YES];
+    [super draw:ctx];
     
     if(self.finalized)
     {
@@ -86,10 +86,6 @@
         CGContextStrokePath(ctx);
     }
     
-    if(!noMeasurement && self.finalized && self.showMeasurement)
-    {
-        [self drawMeasurement:ctx inView:view];
-    }
 }
 
 -(NSString *)measureText

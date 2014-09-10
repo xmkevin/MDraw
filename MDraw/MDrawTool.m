@@ -127,12 +127,7 @@
 {
 }
 
--(void)draw:(CGContextRef)ctx inView:(UIView *)view
-{
-    [self draw:ctx inView:view withoutMeasurement:NO];
-}
-
--(void)draw:(CGContextRef)ctx inView:(UIView *)view withoutMeasurement:(BOOL)noMeasurement
+-(void)draw:(CGContextRef)ctx
 {
 }
 
@@ -156,7 +151,7 @@
     return CGPointInRect(point, handleRect);
 }
 
--(void)drawMeasurement:(CGContextRef)ctx inView:(UIView *)view
+-(void)drawMeasurement:(CGContextRef)ctx
 {
     
     NSString *text = self.measureText;
@@ -176,7 +171,7 @@
         
     }
     
-    CGRect textFrame = [self calculateTextFrameWithTextSize:textSize forToolFrame:self.frame inViewFrame:view.frame];
+    CGRect textFrame = [self calculateTextFrameWithTextSize:textSize forToolFrame:self.frame];
     CGRect textBgFrame = CGRectMake(textFrame.origin.x - 10, textFrame.origin.y - 10, textFrame.size.width + 20, textFrame.size.height + 20);
     CGContextSetFillColorWithColor(ctx, [UIColor colorWithRed:255 green:255 blue:255 alpha:0.5].CGColor);
     CGContextFillRect(ctx, textBgFrame);
@@ -185,25 +180,13 @@
     
 }
 
--(CGRect)calculateTextFrameWithTextSize:(CGSize)textSize forToolFrame:(CGRect)toolFrame inViewFrame:(CGRect)viewFrame
+-(CGRect)calculateTextFrameWithTextSize:(CGSize)textSize forToolFrame:(CGRect)toolFrame
 {
     static CGFloat MARGIN = 20;
     
     CGRect textFrame = CGRectZero;
-    CGFloat top = toolFrame.origin.y;
-    CGFloat bottom = viewFrame.size.height - (toolFrame.origin.y + toolFrame.size.height);
-    
-    //Prefer top position, 64 is the navigation bar height
-    if(top - textSize.height - MARGIN - 64 > 0 || top > bottom)
-    {
-        CGPoint midPoint = CGRectMid(toolFrame);
-        textFrame = CGRectMake(midPoint.x - textSize.width / 2.0f, toolFrame.origin.y - textSize.height - MARGIN, textSize.width, textSize.height);
-    }
-    else
-    {
-        CGPoint midPoint = CGRectMid(toolFrame);
-        textFrame = CGRectMake(midPoint.x - textSize.width / 2.0f, toolFrame.origin.y + toolFrame.size.height + MARGIN, textSize.width, textSize.height);
-    }
+    CGPoint midPoint = CGRectMid(toolFrame);
+    textFrame = CGRectMake(midPoint.x - textSize.width / 2.0f, toolFrame.origin.y - textSize.height - MARGIN, textSize.width, textSize.height);
     
     return textFrame;
     

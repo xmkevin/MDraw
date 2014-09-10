@@ -28,7 +28,7 @@
 #import "MDrawFreeline.h"
 #import "MDrawPolyline.h"
 
-@interface ViewController ()
+@interface ViewController () <UIBarPositioningDelegate>
 
 @end
 
@@ -50,6 +50,11 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (UIBarPosition)positionForBar:(id<UIBarPositioning>)bar
+{
+    return UIBarPositionTopAttached;
 }
 
 -(IBAction)drawLine:(id)sender

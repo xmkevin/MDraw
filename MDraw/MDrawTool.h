@@ -26,8 +26,6 @@
 #define HANDLE_SIZE 20
 #define NEAR_WIDTH 10
 
-@class PMDraw;
-
 @protocol MDrawToolProtocol<NSObject>
 
 
@@ -61,25 +59,6 @@
  **/
 @property (nonatomic,strong)UIColor *color;
 
-/**
- *  YES to show measurement information while No to hide
- */
-@property (nonatomic,assign) BOOL showMeasurement;
-
-/**
- *  How many μm per pixel, default value is 0, means it does not have a calibration.
- */
-@property (nonatomic,assign) CGFloat calibration;
-
-/**
- *  Displaying unit, default is px;
- */
-@property (nonatomic,strong) NSString *unit;
-
-/**
- *  Get the measure text for this tool.
- */
-@property (nonatomic, readonly) NSString *measureText;
 
 /**
  * Init the tool with a start point.
@@ -134,14 +113,38 @@
  *
  *  @param view The view to draw on
  */
--(void)draw:(CGContextRef)ctx inView:(UIView *)view;
+-(void)draw:(CGContextRef)ctx;
+
+@end
+
+@protocol MDrawToolMeasurementProtocol <NSObject>
+
+/**
+ *  YES to show measurement information while No to hide
+ */
+@property (nonatomic,assign) BOOL showMeasurement;
+
+/**
+ *  How many μm per pixel, default value is 0, means it does not have a calibration.
+ */
+@property (nonatomic,assign) CGFloat calibration;
+
+/**
+ *  Displaying unit, default is px;
+ */
+@property (nonatomic,strong) NSString *unit;
+
+/**
+ *  Get the measure text for this tool.
+ */
+@property (nonatomic, readonly) NSString *measureText;
 
 @end
 
 /**
  * Base class of draw tool
  **/
-@interface MDrawTool : NSObject <MDrawToolProtocol>
+@interface MDrawTool : NSObject <MDrawToolProtocol, MDrawToolMeasurementProtocol>
 {
     
 @private

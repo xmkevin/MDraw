@@ -12,6 +12,7 @@
 		330B58CC19B98CFD0078C2FF /* MDrawComment.m in Sources */ = {isa = PBXBuildFile; fileRef = 330B58C319B98CFD0078C2FF /* MDrawComment.m */; };
 		330B58CD19B98CFD0078C2FF /* MDrawFatArrow.m in Sources */ = {isa = PBXBuildFile; fileRef = 330B58C519B98CFD0078C2FF /* MDrawFatArrow.m */; };
 		330B58CE19B98CFD0078C2FF /* MDrawText.m in Sources */ = {isa = PBXBuildFile; fileRef = 330B58C819B98CFD0078C2FF /* MDrawText.m */; };
+		330B58D119B9B00E0078C2FF /* MDrawMeasurementInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 330B58D019B9B00E0078C2FF /* MDrawMeasurementInfo.m */; };
 		3317D07B17C6F40D008443C6 /* MDrawRect.m in Sources */ = {isa = PBXBuildFile; fileRef = 3317D07A17C6F40D008443C6 /* MDrawRect.m */; };
 		3317D07E17C74AF3008443C6 /* MDrawEllipse.m in Sources */ = {isa = PBXBuildFile; fileRef = 3317D07D17C74AF3008443C6 /* MDrawEllipse.m */; };
 		33AEF08417D07B21003C376A /* MDrawArrow.m in Sources */ = {isa = PBXBuildFile; fileRef = 33AEF08317D07B21003C376A /* MDrawArrow.m */; };
@@ -60,6 +61,8 @@
 		330B58C719B98CFD0078C2FF /* MDrawText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDrawText.h; sourceTree = "<group>"; };
 		330B58C819B98CFD0078C2FF /* MDrawText.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDrawText.m; sourceTree = "<group>"; };
 		330B58C919B98CFD0078C2FF /* MDrawTool_Subclass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDrawTool_Subclass.h; sourceTree = "<group>"; };
+		330B58CF19B9B00E0078C2FF /* MDrawMeasurementInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDrawMeasurementInfo.h; sourceTree = "<group>"; };
+		330B58D019B9B00E0078C2FF /* MDrawMeasurementInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDrawMeasurementInfo.m; sourceTree = "<group>"; };
 		3317D07917C6F40D008443C6 /* MDrawRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDrawRect.h; sourceTree = "<group>"; };
 		3317D07A17C6F40D008443C6 /* MDrawRect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDrawRect.m; sourceTree = "<group>"; };
 		3317D07C17C74AF3008443C6 /* MDrawEllipse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDrawEllipse.h; sourceTree = "<group>"; };
@@ -230,6 +233,8 @@
 				33C0988217CD8DB400C3EC1B /* MUndoManager.m */,
 				33AEF08217D07B21003C376A /* MDrawArrow.h */,
 				33AEF08317D07B21003C376A /* MDrawArrow.m */,
+				330B58CF19B9B00E0078C2FF /* MDrawMeasurementInfo.h */,
+				330B58D019B9B00E0078C2FF /* MDrawMeasurementInfo.m */,
 			);
 			name = DrawTool;
 			sourceTree = "<group>";
@@ -339,6 +344,7 @@
 				3317D07E17C74AF3008443C6 /* MDrawEllipse.m in Sources */,
 				33D7940D17CAFA76007E2E94 /* MDrawPolyline.m in Sources */,
 				33E28BB217C2140B00EFC071 /* MDrawView.m in Sources */,
+				330B58D119B9B00E0078C2FF /* MDrawMeasurementInfo.m in Sources */,
 				33E28B8417C20DA200EFC071 /* main.m in Sources */,
 				3317D07B17C6F40D008443C6 /* MDrawRect.m in Sources */,
 				33D7940A17CADB97007E2E94 /* MDrawFreeline.m in Sources */,

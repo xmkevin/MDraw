@@ -15,7 +15,7 @@
     return CGPointInRect(point, self.frame);
 }
 
--(void)draw:(CGContextRef)ctx inView:(UIView *)view withoutMeasurement:(BOOL)noMeasurement
+-(void)draw:(CGContextRef)ctx
 {
     CGFloat length = CGPointDistance(_startPoint, _endPoint);
     CGSize dSize = CGPointOffset(_startPoint, _endPoint);

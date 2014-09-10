@@ -23,7 +23,7 @@
 
 @implementation MDrawEllipse
 
--(void)draw:(CGContextRef)ctx inView:(UIView *)view withoutMeasurement:(BOOL)noMeasurement
+-(void)draw:(CGContextRef)ctx
 {
     CGContextSetStrokeColorWithColor(ctx, self.color.CGColor);
     CGContextSetLineWidth(ctx, self.lineWidth);
@@ -45,10 +45,6 @@
         [self drawHandle:ctx atPoint:CGRectLM(frame)];
     }
     
-    if(!noMeasurement && self.finalized && self.showMeasurement)
-    {
-        [self drawMeasurement:ctx inView:view];
-    }
 }
 
 -(NSString *)measureText

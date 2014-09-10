@@ -17,9 +17,9 @@
     [self promoteText];
 }
 
--(void)draw:(CGContextRef)ctx inView:(UIView *)view
+-(void)draw:(CGContextRef)ctx
 {
-    [super draw:ctx inView:view];
+    [super draw:ctx];
     
     CGRect frame = self.frame;
     
